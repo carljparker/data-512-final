@@ -3,7 +3,7 @@ import geocoder
 
 g = geocoder.bing( 'Mountain View, CA', key=os.environ[ 'BING_API_KEY' ] )
 
-print( g.json[ 'raw' ][ '__type' ] )
+print( g.json[ 'raw' ][ 'address' ][ 'adminDistrict2' ] )
 
 
 # --- END --- #
