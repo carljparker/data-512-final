@@ -100,6 +100,7 @@ To take an example, on September 3, 2020, Trump spoke at a rally at Arnold Palme
 ```python
 import os
 import geocoder
+import pandas as pd
 ```
 
 ```python
@@ -107,9 +108,90 @@ import geocoder
 # Note that the BING_API_KEY variable needs to be set with your API key
 # in the console window from which you launch this Jupyter notebook.
 #
-g = geocoder.bing( 'Kenosha, WI', key=os.environ[ 'BING_API_KEY' ] )
+g = geocoder.bing( 'Kenosha,s WI', key=os.environ[ 'BING_API_KEY' ] )
 
 print( g.json[ 'raw' ][ 'address' ][ 'adminDistrict2' ] )
+```
+
+```python
+trump_rallies = pd.read_csv('data/trump-rallies.csv', 
+        sep=',', 
+        skipinitialspace=True,
+        header=0,
+        na_values='?')
+```
+
+```python
+trump_rallies.columns
+```
+
+```python
+trump_rallies.head()
+```
+
+```python
+trump_rallies.shape
+```
+
+```python
+trump_rallies.iloc[ 0, 1 ]
+```
+
+```python
+trump_rallies.loc[ 0, "State" ]
+```
+
+```python
+target_location = trump_rallies.loc[ 0, "City" ] + ", " + trump_rallies.loc[ 0, "State" ]
+g = geocoder.bing( target_location, key=os.environ[ 'BING_API_KEY' ] )
+target_location
+```
+
+```python
+g = geocoder.bing( trump_rallies.loc[ 0, "City" ] + ", " + trump_rallies.loc[ 0, "State" ], key=os.environ[ 'BING_API_KEY' ] )
+```
+
+```python
+geocoder.bing( trump_rallies.loc[ 0, "City" ] + ", " + trump_rallies.loc[ 0, "State" ], key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ][ 'address' ][ 'adminDistrict2' ]
+```
+
+```python
+print( g.json[ 'raw' ][ 'address' ][ 'adminDistrict2' ] )
+```
+
+```python
+trump_rallies.loc[ : , 'County' ] = geocoder.bing( trump_rallies.loc[ 0, "City" ] + ", " + trump_rallies.loc[ 0, "State" ], key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ][ 'address' ][ 'adminDistrict2' ]
+```
+
+```python
+def gcode( row ):
+    return( geocoder.bing( row[ 'City' ] + ", " + row[ 'State' ], key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ][ 'address' ][ 'adminDistrict2' ] )
+```
+
+```python
+def gcode( row ):
+    return( geocoder.bing( 'Kenosha' + ", " + 'WI', key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ][ 'address' ][ 'adminDistrict2' ] )
+```
+
+```python
+def gcode_np():
+    return( geocoder.bing( 'Kenosha' + ", " + 'WI', key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ][ 'address' ][ 'adminDistrict2' ] )
+```
+
+```python
+geocoder.bing( 'Kenosha' + ", " + 'WI', key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ][ 'address' ][ 'adminDistrict2' ]
+```
+
+```python
+gcode_np()
+```
+
+```python
+trump_rallies[ 'County' ] = trump_rallies.apply( gcode, axis = 1 )
+```
+
+```python
+trump_rallies.loc[ : , 'County' ].head()
 ```
 
 ### --- END --- ###
