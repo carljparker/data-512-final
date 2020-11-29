@@ -139,53 +139,13 @@ trump_rallies.shape
 ```
 
 ```python
-trump_rallies.iloc[ 0, 1 ]
-```
-
-```python
-trump_rallies.loc[ 0, "State" ]
-```
-
-```python
 target_location = trump_rallies.loc[ 0, "City" ] + ", " + trump_rallies.loc[ 0, "State" ]
-g = geocoder.bing( target_location, key=os.environ[ 'BING_API_KEY' ] )
 target_location
 ```
 
 ```python
-g = geocoder.bing( trump_rallies.loc[ 0, "City" ] + ", " + trump_rallies.loc[ 0, "State" ], key=os.environ[ 'BING_API_KEY' ] )
-```
-
-```python
-geocoder.bing( trump_rallies.loc[ 0, "City" ] + ", " + trump_rallies.loc[ 0, "State" ], key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ][ 'address' ][ 'adminDistrict2' ]
-```
-
-```python
-print( g.json[ 'raw' ][ 'address' ][ 'adminDistrict2' ] )
-```
-
-```python
-trump_rallies.loc[ : , 'County' ] = geocoder.bing( trump_rallies.loc[ 0, "City" ] + ", " + trump_rallies.loc[ 0, "State" ], key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ][ 'address' ][ 'adminDistrict2' ]
-```
-
-```python
-def gcode( row ):
-    g = geocoder.bing( row[ 'City' ] + ", " + row[ 'State' ], key=os.environ[ 'BING_API_KEY' ] )
-    if 'adminDistrict2' in g.json[ 'raw' ][ 'address' ]:
-        county = g.json[ 'raw' ][ 'address' ][ 'adminDistrict2' ] 
-        return( county )
-    else:
-        return( 'Sumpter' )
-
-```
-
-```python
-def gcode_np():
-    return( geocoder.bing( 'Kenosha' + ", " + 'WI', key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ][ 'address' ][ 'adminDistrict2' ] )
-```
-
-```python
-geocoder.bing( 'Kenosha' + ", " + 'WI', key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ][ 'address' ][ 'adminDistrict2' ]
+g = geocoder.bing( target_location, key=os.environ[ 'BING_API_KEY' ] )
+g.json[ 'raw' ][ 'address' ][ 'adminDistrict2' ] 
 ```
 
 ```python
@@ -197,11 +157,14 @@ geocoder.bing( 'The Villages' + ", " + 'FL', key=os.environ[ 'BING_API_KEY' ] ).
 ```
 
 ```python
-geocoder.bing( 'The Villages' + ", " + 'FL', key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ][ 'address' ][ 'adminDistrict2' ]
-```
+def gcode( row ):
+    g = geocoder.bing( row[ 'City' ] + ", " + row[ 'State' ], key=os.environ[ 'BING_API_KEY' ] )
+    if 'adminDistrict2' in g.json[ 'raw' ][ 'address' ]:
+        county = g.json[ 'raw' ][ 'address' ][ 'adminDistrict2' ] 
+        return( county )
+    else:
+        return( 'Sumpter' )
 
-```python
-gcode_np()
 ```
 
 ```python

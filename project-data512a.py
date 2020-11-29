@@ -133,27 +133,18 @@ trump_rallies.tail()
 trump_rallies.shape
 
 # %%
-trump_rallies.iloc[ 0, 1 ]
-
-# %%
-trump_rallies.loc[ 0, "State" ]
-
-# %%
 target_location = trump_rallies.loc[ 0, "City" ] + ", " + trump_rallies.loc[ 0, "State" ]
-g = geocoder.bing( target_location, key=os.environ[ 'BING_API_KEY' ] )
 target_location
 
 # %%
-g = geocoder.bing( trump_rallies.loc[ 0, "City" ] + ", " + trump_rallies.loc[ 0, "State" ], key=os.environ[ 'BING_API_KEY' ] )
+g = geocoder.bing( target_location, key=os.environ[ 'BING_API_KEY' ] )
+g.json[ 'raw' ][ 'address' ][ 'adminDistrict2' ] 
 
 # %%
-geocoder.bing( trump_rallies.loc[ 0, "City" ] + ", " + trump_rallies.loc[ 0, "State" ], key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ][ 'address' ][ 'adminDistrict2' ]
+geocoder.bing( 'The Villages' + ", " + 'FL', key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ]
 
 # %%
-print( g.json[ 'raw' ][ 'address' ][ 'adminDistrict2' ] )
-
-# %%
-trump_rallies.loc[ : , 'County' ] = geocoder.bing( trump_rallies.loc[ 0, "City" ] + ", " + trump_rallies.loc[ 0, "State" ], key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ][ 'address' ][ 'adminDistrict2' ]
+geocoder.bing( 'The Villages' + ", " + 'FL', key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ][ 'address' ]
 
 
 # %%
@@ -166,26 +157,6 @@ def gcode( row ):
         return( 'Sumpter' )
 
 
-
-# %%
-def gcode_np():
-    return( geocoder.bing( 'Kenosha' + ", " + 'WI', key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ][ 'address' ][ 'adminDistrict2' ] )
-
-
-# %%
-geocoder.bing( 'Kenosha' + ", " + 'WI', key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ][ 'address' ][ 'adminDistrict2' ]
-
-# %%
-geocoder.bing( 'The Villages' + ", " + 'FL', key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ]
-
-# %%
-geocoder.bing( 'The Villages' + ", " + 'FL', key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ][ 'address' ]
-
-# %%
-geocoder.bing( 'The Villages' + ", " + 'FL', key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ][ 'address' ][ 'adminDistrict2' ]
-
-# %%
-gcode_np()
 
 # %%
 trump_rallies[ 'County' ] = trump_rallies.apply( gcode, axis = 1 )
