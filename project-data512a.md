@@ -1,7 +1,7 @@
 ---
 jupyter:
   jupytext:
-    formats: ipynb,md
+    formats: ipynb,md,py:percent
     text_representation:
       extension: .md
       format_name: markdown
@@ -116,6 +116,7 @@ print( g.json[ 'raw' ][ 'address' ][ 'adminDistrict2' ] )
 ```python
 trump_rallies = pd.read_csv('data/trump-rallies.csv', 
         sep=',', 
+        comment='#',
         skipinitialspace=True,
         header=0,
         na_values='?')
@@ -127,6 +128,10 @@ trump_rallies.columns
 
 ```python
 trump_rallies.head()
+```
+
+```python
+trump_rallies.tail()
 ```
 
 ```python
@@ -165,12 +170,13 @@ trump_rallies.loc[ : , 'County' ] = geocoder.bing( trump_rallies.loc[ 0, "City" 
 
 ```python
 def gcode( row ):
-    return( geocoder.bing( row[ 'City' ] + ", " + row[ 'State' ], key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ][ 'address' ][ 'adminDistrict2' ] )
-```
+    g = geocoder.bing( row[ 'City' ] + ", " + row[ 'State' ], key=os.environ[ 'BING_API_KEY' ] )
+    if 'adminDistrict2' in g.json[ 'raw' ][ 'address' ]:
+        county = g.json[ 'raw' ][ 'address' ][ 'adminDistrict2' ] 
+        return( county )
+    else:
+        return( 'Sumpter' )
 
-```python
-def gcode( row ):
-    return( geocoder.bing( 'Kenosha' + ", " + 'WI', key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ][ 'address' ][ 'adminDistrict2' ] )
 ```
 
 ```python
@@ -183,14 +189,23 @@ geocoder.bing( 'Kenosha' + ", " + 'WI', key=os.environ[ 'BING_API_KEY' ] ).json[
 ```
 
 ```python
+geocoder.bing( 'The Villages' + ", " + 'FL', key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ]
+```
+
+```python
+geocoder.bing( 'The Villages' + ", " + 'FL', key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ][ 'address' ]
+```
+
+```python
+geocoder.bing( 'The Villages' + ", " + 'FL', key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ][ 'address' ][ 'adminDistrict2' ]
+```
+
+```python
 gcode_np()
 ```
 
 ```python
 trump_rallies[ 'County' ] = trump_rallies.apply( gcode, axis = 1 )
-```
-
-```python
 trump_rallies.loc[ : , 'County' ].head()
 ```
 
