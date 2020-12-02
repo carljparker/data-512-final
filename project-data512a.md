@@ -163,17 +163,135 @@ def gcode( row ):
         county = g.json[ 'raw' ][ 'address' ][ 'adminDistrict2' ] 
         return( county )
     else:
-        return( 'Sumpter' )
+        return( 'Sumpter County' )
 
 ```
 
 ```python
 trump_rallies[ 'County' ] = trump_rallies.apply( gcode, axis = 1 )
+```
+
+```python
 trump_rallies.loc[ : , 'County' ].head()
 ```
 
-### --- END --- ###
+```python
+trump_rallies.loc[ : , 'County' ].tail()
+```
+
+# Read time series data from Johns-Hopkins COVID-19 repository #
 
 ```python
-
+covid_19_time_series_by_county = pd.read_csv('data/time_series_covid19_deaths_US.csv', 
+        sep=',', 
+        comment='#',
+        skipinitialspace=True,
+        header=0,
+        na_values='?')
 ```
+
+```python
+covid_19_time_series_by_county.shape
+```
+
+```python
+covid_19_time_series_by_county.head()
+```
+
+```python
+covid_19_time_series_by_county.tail()
+```
+
+Most of the columns are the COVID-19 deaths for a given date. Show the non-date columns.
+
+```python
+covid_19_time_series_by_county.columns.array[ 0:12 ]
+```
+
+The `Admin2` column contains the county. There are many duplicates in that column; we can't merge on it.
+
+```python
+len( covid_19_time_series_by_county.loc[ :, 'Admin2' ] ) 
+```
+
+```python
+len( covid_19_time_series_by_county.loc[ :, 'Admin2' ].unique() )
+```
+
+The `Combined_Key` column provides a _primary key_ that uniquely identifies the row.
+
+```python
+covid_19_time_series_by_county.loc[ :, 'Combined_Key' ]
+```
+
+Remove unneeded columns.
+
+```python
+covid_19_time_series_by_county.drop( [ 'UID', 'iso2', 'iso3', 'code3', 'FIPS', 'Admin2', 'Province_State', 'Country_Region' ] , axis = 1, inplace = True )
+```
+
+```python
+covid_19_time_series_by_county.head()
+```
+
+# Synthesize a key for the Trump rallies dataframe to use for merging #
+
+
+Read in a dataset that maps from state names to state abbreviations.
+
+```python
+state_abbr = pd.read_csv('data/state-abbr.csv', 
+        sep=',', 
+        comment='#',
+        skipinitialspace=True,
+        header=0,
+        na_values='?')
+```
+
+```python
+state_abbr.head()
+```
+
+```python
+state_abbr.tail()
+```
+
+Create a dictionary from the two columns of our state/abbr dataframe.
+
+```python
+map_abbr_state = dict( zip( state_abbr.Abbr.str.strip(), state_abbr.State.str.strip() ) )
+```
+
+```python
+map_abbr_state.keys()
+```
+
+```python
+map_abbr_state[ 'VA' ]
+```
+
+```python
+def create_combined_key_for_trump( row ):
+    combined = row[ 'County' ][ 0:-6 ].rstrip() + ", " + map_abbr_state[ row[ 'State' ] ] + ", " + 'US'
+    return combined
+
+trump_rallies[ 'Combined_Key' ] = trump_rallies.apply( create_combined_key_for_trump, axis = 1 )
+```
+
+```python
+trump_rallies[ 'Combined_Key' ].head()
+```
+
+```python
+trump_rallies.head()
+```
+
+```python
+trump_rallies = trump_rallies.merge( covid_19_time_series_by_county, how = "left", on = "Combined_Key")
+```
+
+```python
+trump_rallies.columns
+```
+
+### --- END --- ###
