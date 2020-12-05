@@ -286,12 +286,61 @@ trump_rallies[ 'Combined_Key' ].head()
 trump_rallies.head()
 ```
 
+# Merge Trump rallies data with COVID-19 data #
+
 ```python
 trump_rallies = trump_rallies.merge( covid_19_time_series_by_county, how = "left", on = "Combined_Key")
 ```
 
 ```python
 trump_rallies.columns
+```
+
+```python
+trump_rallies.shape
+```
+
+```python
+trump_rallies.head()
+```
+
+# Derive a table that has only the COVID-19 deaths by rally location #
+
+
+Drop columns that are unecessary for this table
+
+```python
+covid_19_deaths_by_rally = trump_rallies.drop( ["Date", "City", "State", "County", "Lat", "Long_", "Population" ], axis = 1 )
+covid_19_deaths_by_rally.head()
+```
+
+Swap the rows and columns
+
+```python
+covid_19_deaths_by_rally = covid_19_deaths_by_rally.transpose()
+covid_19_deaths_by_rally.head()
+```
+
+Use the first row as the column labels
+
+```python
+covid_19_deaths_by_rally.columns = covid_19_deaths_by_rally.iloc[0]
+covid_19_deaths_by_rally.drop(covid_19_deaths_by_rally.index[0], inplace = True )
+covid_19_deaths_by_rally.head()
+```
+
+Fix up name of first column
+
+```python
+covid_19_deaths_by_rally.columns.name = ""
+covid_19_deaths_by_rally
+```
+
+# Remove the COVID-19 deaths from the Trump rallies table #
+
+```python
+trump_rallies.drop( trump_rallies.iloc[:, 8:], axis = 1, inplace = True )
+trump_rallies.head()
 ```
 
 ### --- END --- ###

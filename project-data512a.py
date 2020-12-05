@@ -263,11 +263,59 @@ trump_rallies[ 'Combined_Key' ].head()
 # %%
 trump_rallies.head()
 
+# %% [markdown]
+# # Merge Trump rallies data with COVID-19 data #
+
 # %%
 trump_rallies = trump_rallies.merge( covid_19_time_series_by_county, how = "left", on = "Combined_Key")
 
 # %%
 trump_rallies.columns
+
+# %%
+trump_rallies.shape
+
+# %%
+trump_rallies.head()
+
+# %% [markdown]
+# # Derive a table that has only the COVID-19 deaths by rally location #
+
+# %% [markdown]
+# Drop columns that are unecessary for this table
+
+# %%
+covid_19_deaths_by_rally = trump_rallies.drop( ["Date", "City", "State", "County", "Lat", "Long_", "Population" ], axis = 1 )
+covid_19_deaths_by_rally.head()
+
+# %% [markdown]
+# Swap the rows and columns
+
+# %%
+covid_19_deaths_by_rally = covid_19_deaths_by_rally.transpose()
+covid_19_deaths_by_rally.head()
+
+# %% [markdown]
+# Use the first row as the column labels
+
+# %%
+covid_19_deaths_by_rally.columns = covid_19_deaths_by_rally.iloc[0]
+covid_19_deaths_by_rally.drop(covid_19_deaths_by_rally.index[0], inplace = True )
+covid_19_deaths_by_rally.head()
+
+# %% [markdown]
+# Fix up name of first column
+
+# %%
+covid_19_deaths_by_rally.columns.name = ""
+covid_19_deaths_by_rally
+
+# %% [markdown]
+# # Remove the COVID-19 deaths from the Trump rallies table #
+
+# %%
+trump_rallies.drop( trump_rallies.iloc[:, 8:], axis = 1, inplace = True )
+trump_rallies.head()
 
 # %% [markdown]
 # ### --- END --- ###
