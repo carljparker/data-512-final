@@ -23,7 +23,7 @@
 # ## Background and Motivation ##
 
 # %% [markdown]
-# Prior to <span style="color:red">May 25, 2020</span>, COVID-19 deaths in the United States were falling precipitously. On May 25th, that descent slowed dramatically, and then, around the beginning of July, reversed itself, starting a second wave of COVID-19 deaths in the United States. The number of deaths in this second wave, 125K, now exceeds that of the first wave, 100K.
+# Prior to May 25, 2020, COVID-19 deaths in the United States were falling precipitously. On May 25th, that descent slowed dramatically, and then, around the beginning of July, reversed itself, starting a second wave of COVID-19 deaths in the United States. The number of deaths in this second wave, 125K, now exceeds that of the first wave, 100K.
 #
 # The date, May 25, 2020, is significant in that it is the date on which George Floyd died while in police custody in Minneapolis, MN. Subsequent to Floyd's death, protests occurred in over 2,000 cities in the United States. It has been suggested that the George Floyd Protests might have contributed to triggering the second wave of COVID-19. 
 #
@@ -100,6 +100,8 @@
 
 # %%
 import os
+import datetime
+import re
 import geocoder
 import pandas as pd
 
@@ -310,12 +312,38 @@ covid_19_deaths_by_rally.head()
 covid_19_deaths_by_rally.columns.name = ""
 covid_19_deaths_by_rally
 
+# %%
+date_index = covid_19_deaths_by_rally.index
+date_index
+
+
+# %%
+def convert_to_iso( string ):
+    m = re.match( '(\d*)/(\d*)/(\d*)', string )
+    my_date = datetime.date( int( '20' + m.group( 3 ) ), int( m.group( 1 ) ), int( m.group( 2 ) ) )
+    return( my_date.isoformat() )
+
+iso_index = date_index.map( convert_to_iso )
+covid_19_deaths_by_rally.index = iso_index
+
+# %%
+covid_19_deaths_by_rally.head()
+
 # %% [markdown]
 # # Remove the COVID-19 deaths from the Trump rallies table #
 
 # %%
 trump_rallies.drop( trump_rallies.iloc[:, 8:], axis = 1, inplace = True )
 trump_rallies.head()
+
+# %%
+trump_rallies[ trump_rallies.Date == "2020-08-17" ]
+
+# %%
+trump_rallies.loc[ 2, 'Combined_Key' ]
+
+# %%
+covid_19_deaths_by_rally.loc[ trump_rallies.loc[ 2, 'Date'], trump_rallies.loc[ 2, 'Combined_Key'] ]
 
 # %% [markdown]
 # ### --- END --- ###
