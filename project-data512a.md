@@ -306,6 +306,10 @@ trump_rallies.shape
 trump_rallies.head()
 ```
 
+```python
+trump_rallies.tail(10)
+```
+
 # Derive a table that has only the COVID-19 deaths by rally location #
 
 
@@ -374,6 +378,34 @@ trump_rallies.loc[ 2, 'Combined_Key' ]
 
 ```python
 covid_19_deaths_by_rally.loc[ trump_rallies.loc[ 2, 'Date'], trump_rallies.loc[ 2, 'Combined_Key'] ]
+```
+
+```python
+covid_19_deaths_by_rally.loc[ :, trump_rallies.loc[ 2, 'Combined_Key'] ].max()
+```
+
+```python
+rally_date_str = trump_rallies.loc[ 2, 'Date']
+```
+
+```python
+time_interval = datetime.timedelta( days = 28 )
+```
+
+```python
+before_date = ( my_date.fromisoformat( rally_date_str ) - time_interval ).isoformat()
+```
+
+```python
+after_date = ( my_date.fromisoformat( rally_date_str ) + time_interval ).isoformat()
+```
+
+```python
+covid_19_deaths_by_rally.loc[ :, trump_rallies.loc[ 2, 'Combined_Key'] ].loc[ before_date:rally_date_str ]
+```
+
+```python
+covid_19_deaths_by_rally.loc[ :, trump_rallies.loc[ 2, 'Combined_Key'] ].loc[ rally_date_str:after_date ]
 ```
 
 ### --- END --- ###
