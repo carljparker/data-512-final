@@ -313,7 +313,10 @@ covid_19_deaths_by_rally.head()
 
 # %%
 covid_19_deaths_by_rally.columns.name = ""
-covid_19_deaths_by_rally
+covid_19_deaths_by_rally.head()
+
+# %%
+covid_19_deaths_by_rally.tail()
 
 # %%
 date_index = covid_19_deaths_by_rally.index
@@ -346,28 +349,59 @@ trump_rallies[ trump_rallies.Date == "2020-08-17" ]
 trump_rallies.loc[ 2, 'Combined_Key' ]
 
 # %%
+covid_19_deaths_by_rally_no_accumulate = covid_19_deaths_by_rally.diff(periods=1, axis=0)
+
+# %%
+covid_19_deaths_by_rally_no_accumulate.tail()
+
+# %%
+covid_19_deaths_by_rally.tail()
+
+# %%
 covid_19_deaths_by_rally.loc[ trump_rallies.loc[ 2, 'Date'], trump_rallies.loc[ 2, 'Combined_Key'] ]
 
 # %%
 covid_19_deaths_by_rally.loc[ :, trump_rallies.loc[ 2, 'Combined_Key'] ].max()
 
 # %%
-rally_date_str = trump_rallies.loc[ 2, 'Date']
-
-# %%
 time_interval = datetime.timedelta( days = 28 )
 
-# %%
-before_date = ( my_date.fromisoformat( rally_date_str ) - time_interval ).isoformat()
+rally_date_str = trump_rallies.loc[ 2, 'Date']
+
+before_date_str = ( my_date.fromisoformat( rally_date_str ) - time_interval ).isoformat()
+after_date_str = ( my_date.fromisoformat( rally_date_str ) + time_interval ).isoformat()
+
+# %% [markdown]
+# Deaths each day for the 28 days prior to Trump's rally.
 
 # %%
-after_date = ( my_date.fromisoformat( rally_date_str ) + time_interval ).isoformat()
+covid_19_deaths_by_rally_no_accumulate.loc[ :, trump_rallies.loc[ 2, 'Combined_Key'] ].loc[ before_date_str:rally_date_str ].sum()
+
 
 # %%
-covid_19_deaths_by_rally.loc[ :, trump_rallies.loc[ 2, 'Combined_Key'] ].loc[ before_date:rally_date_str ]
+def deaths_prior( row ):
+    time_interval = datetime.timedelta( days = 28 )
+    rally_date_str = row[ 'Date'] 
+    before_date_str = ( my_date.fromisoformat( rally_date_str ) - time_interval ).isoformat()
+    after_date_str = ( my_date.fromisoformat( rally_date_str ) + time_interval ).isoformat()
+    return( covid_19_deaths_by_rally_no_accumulate.loc[ :, row[ 'Combined_Key' ] ].loc[ before_date_str:rally_date_str ].sum() )
+
+trump_rallies.apply( deaths_prior, axis = 1 )
+
+# %% [markdown]
+# Deaths each day for the 28 days after Trump's rally.
 
 # %%
-covid_19_deaths_by_rally.loc[ :, trump_rallies.loc[ 2, 'Combined_Key'] ].loc[ rally_date_str:after_date ]
+covid_19_deaths_by_rally_no_accumulate.loc[ :, trump_rallies.loc[ 2, 'Combined_Key'] ].loc[ rally_date_str:after_date_str ].sum()
+
+# %%
+covid_19_deaths_by_rally_no_accumulate.columns
+
+# %%
+len( covid_19_deaths_by_rally_no_accumulate.columns )
+
+# %%
+len( covid_19_deaths_by_rally_no_accumulate.columns.unique() )
 
 # %% [markdown]
 # ### --- END --- ###
