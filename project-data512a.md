@@ -320,6 +320,34 @@ covid_19_deaths_by_rally = trump_rallies.drop( ["Date", "City", "State", "County
 covid_19_deaths_by_rally.head()
 ```
 
+Trump visited the following counties twice, which creates duplicate rows in the dataframe.
+
+- Maricopa, Arizona, US
+- Douglas, Nevada, US
+- Cumberland, North Carolina, US
+
+Drop those duplicate rows.
+
+```python
+len( covid_19_deaths_by_rally ) - len( covid_19_deaths_by_rally.drop_duplicates() )
+```
+
+```python
+covid_19_deaths_by_rally.drop_duplicates( inplace = True )
+len( covid_19_deaths_by_rally ) - len( covid_19_deaths_by_rally.drop_duplicates() )
+```
+
+Dropping rows leaves gaps in the index. For example, note that `48` is missing below. Renumber the index.
+
+```python
+covid_19_deaths_by_rally.index
+```
+
+```python
+covid_19_deaths_by_rally.set_index( pd.Int64Index( range( covid_19_deaths_by_rally.shape[ 0 ] ) ), inplace = True )
+covid_19_deaths_by_rally.index
+```
+
 Swap the rows and columns
 
 ```python
@@ -335,21 +363,14 @@ covid_19_deaths_by_rally.drop(covid_19_deaths_by_rally.index[0], inplace = True 
 covid_19_deaths_by_rally.head()
 ```
 
-Fix up name of first column
+Fix up name of first column. View the tail of the dataframe so we can see the number of deaths at the end of the time interval.
 
 ```python
 covid_19_deaths_by_rally.columns.name = ""
-covid_19_deaths_by_rally.head()
-```
-
-```python
 covid_19_deaths_by_rally.tail()
 ```
 
-```python
-date_index = covid_19_deaths_by_rally.index
-date_index
-```
+The Trump rallies dataframe uses dates in ISO 8601 format. Convert the dates in the COVID-19 deaths table to use the same format.
 
 ```python
 def convert_to_iso( string ):
@@ -380,16 +401,18 @@ trump_rallies[ trump_rallies.Date == "2020-08-17" ]
 trump_rallies.loc[ 2, 'Combined_Key' ]
 ```
 
+The time series data from Johns-Hopkins is cumulative. We want the number of deaths on a particular day, rather than the total number of deaths up until that day. Use the `.diff()` method to the differences between each row in the dataframe.
+
 ```python
 covid_19_deaths_by_rally_no_accumulate = covid_19_deaths_by_rally.diff(periods=1, axis=0)
 ```
 
 ```python
-covid_19_deaths_by_rally_no_accumulate.tail()
+covid_19_deaths_by_rally.tail()
 ```
 
 ```python
-covid_19_deaths_by_rally.tail()
+covid_19_deaths_by_rally_no_accumulate.tail()
 ```
 
 ```python
@@ -403,7 +426,7 @@ covid_19_deaths_by_rally.loc[ :, trump_rallies.loc[ 2, 'Combined_Key'] ].max()
 ```python
 time_interval = datetime.timedelta( days = 28 )
 
-rally_date_str = trump_rallies.loc[ 2, 'Date']
+rally_date_str = trump_rallies.loc[ 1, 'Date']
 
 before_date_str = ( my_date.fromisoformat( rally_date_str ) - time_interval ).isoformat()
 after_date_str = ( my_date.fromisoformat( rally_date_str ) + time_interval ).isoformat()
@@ -412,7 +435,31 @@ after_date_str = ( my_date.fromisoformat( rally_date_str ) + time_interval ).iso
 Deaths each day for the 28 days prior to Trump's rally.
 
 ```python
+covid_19_deaths_by_rally_no_accumulate.loc[ :, trump_rallies.loc[ 0, 'Combined_Key'] ].loc[ before_date_str:rally_date_str ]
+```
+
+```python
+covid_19_deaths_by_rally_no_accumulate.loc[ :, trump_rallies.loc[ 0, 'Combined_Key'] ].loc[ before_date_str:rally_date_str ].sum()
+```
+
+```python
+covid_19_deaths_by_rally_no_accumulate.loc[ :, trump_rallies.loc[ 1, 'Combined_Key'] ].loc[ before_date_str:rally_date_str ].sum()
+```
+
+```python
+covid_19_deaths_by_rally_no_accumulate.loc[ :, trump_rallies.loc[ 48, 'Combined_Key'] ].loc[ before_date_str:rally_date_str ].sum()
+```
+
+```python
 covid_19_deaths_by_rally_no_accumulate.loc[ :, trump_rallies.loc[ 2, 'Combined_Key'] ].loc[ before_date_str:rally_date_str ].sum()
+```
+
+```python
+covid_19_deaths_by_rally_no_accumulate.loc[ :, trump_rallies.loc[ 3, 'Combined_Key'] ].loc[ before_date_str:rally_date_str ].sum()
+```
+
+```python
+covid_19_deaths_by_rally_no_accumulate.loc[ :, trump_rallies.loc[ 4, 'Combined_Key'] ].loc[ before_date_str:rally_date_str ].sum()
 ```
 
 ```python
@@ -423,7 +470,7 @@ def deaths_prior( row ):
     after_date_str = ( my_date.fromisoformat( rally_date_str ) + time_interval ).isoformat()
     return( covid_19_deaths_by_rally_no_accumulate.loc[ :, row[ 'Combined_Key' ] ].loc[ before_date_str:rally_date_str ].sum() )
 
-trump_rallies.apply( deaths_prior, axis = 1 )
+trump_rallies.apply( deaths_prior, axis = 1 )[ 48 ]
 ```
 
 Deaths each day for the 28 days after Trump's rally.
@@ -438,6 +485,14 @@ covid_19_deaths_by_rally_no_accumulate.columns
 
 ```python
 len( covid_19_deaths_by_rally_no_accumulate.columns )
+```
+
+```python
+covid_19_deaths_by_rally_no_accumulate.columns.sort_values()
+```
+
+```python
+covid_19_deaths_by_rally_no_accumulate.columns.get_loc( "Maricopa, Arizona, US" )
 ```
 
 ```python
