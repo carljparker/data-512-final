@@ -426,31 +426,51 @@ def deaths_prior( row ):
     time_interval = datetime.timedelta( days = 28 )
     rally_date_str = row[ 'Date'] 
     before_date_str = ( my_date.fromisoformat( rally_date_str ) - time_interval ).isoformat()
-    after_date_str = ( my_date.fromisoformat( rally_date_str ) + time_interval ).isoformat()
     return( covid_19_deaths_by_rally_no_accumulate.loc[ :, row[ 'Combined_Key' ] ].loc[ before_date_str:rally_date_str ].sum() )
 
-trump_rallies.apply( deaths_prior, axis = 1 )[ 48 ]
+trump_rallies[ "deaths_prior" ] = trump_rallies.apply( deaths_prior, axis = 1 )
+
+
+# %%
+def deaths_after( row ):
+    time_interval = datetime.timedelta( days = 28 )
+    rally_date_str = row[ 'Date'] 
+    after_date_str = ( my_date.fromisoformat( rally_date_str ) + time_interval ).isoformat()
+    return( covid_19_deaths_by_rally_no_accumulate.loc[ :, row[ 'Combined_Key' ] ].loc[ rally_date_str:after_date_str ].sum() )
+
+trump_rallies[ "deaths_after" ] = trump_rallies.apply( deaths_after, axis = 1 )
+
+
+# %%
+def percent_change( row ):
+    deaths_prior = row[ "deaths_prior" ]
+    deaths_after = row[ "deaths_after" ]
+    if ( (deaths_prior) == 0 ):
+        return( 0 )
+    if ( (deaths_after) == 0 ):
+        return( 0 )
+    if ( deaths_prior < deaths_after ):
+        return( (  100 ) * round( ( ( deaths_after - deaths_prior ) / deaths_prior ), 2 ) ) 
+    else:
+        return( ( -100 ) * round( ( ( deaths_prior - deaths_after ) / deaths_prior ), 2 ) )
+    
+trump_rallies[ "percent_change" ] = trump_rallies.apply( percent_change, axis = 1 )
 
 # %% [markdown]
 # Deaths each day for the 28 days after Trump's rally.
 
 # %%
-covid_19_deaths_by_rally_no_accumulate.loc[ :, trump_rallies.loc[ 2, 'Combined_Key'] ].loc[ rally_date_str:after_date_str ].sum()
+trump_rallies.head( 35 )
 
 # %%
-covid_19_deaths_by_rally_no_accumulate.columns
+trump_rallies.tail( 35 )
 
 # %%
-len( covid_19_deaths_by_rally_no_accumulate.columns )
+trump_rally_locations = trump_rallies.drop( ["Date", "State", "County", "Combined_Key", "Population", "deaths_prior", "deaths_after" ], axis = 1 )
+trump_rally_locations.head()
 
 # %%
-covid_19_deaths_by_rally_no_accumulate.columns.sort_values()
-
-# %%
-covid_19_deaths_by_rally_no_accumulate.columns.get_loc( "Maricopa, Arizona, US" )
-
-# %%
-len( covid_19_deaths_by_rally_no_accumulate.columns.unique() )
+trump_rally_locations.to_csv( 'data/trump-rally-locations.csv', index_label = 'Id' )
 
 # %% [markdown]
 # ### --- END --- ###
