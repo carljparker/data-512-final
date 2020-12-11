@@ -102,7 +102,9 @@ import os
 import datetime
 import re
 import geocoder
+import numpy as np
 import pandas as pd
+from matplotlib import pyplot as plt
 ```
 
 ```python
@@ -491,9 +493,11 @@ def percent_change( row ):
     if ( (deaths_after) == 0 ):
         return( 0 )
     if ( deaths_prior < deaths_after ):
-        return( (  100 ) * round( ( ( deaths_after - deaths_prior ) / deaths_prior ), 2 ) ) 
+        change = ( deaths_after - deaths_prior ) / deaths_prior
     else:
-        return( ( -100 ) * round( ( ( deaths_prior - deaths_after ) / deaths_prior ), 2 ) )
+        change = (-1) * ( deaths_prior - deaths_after ) / deaths_prior 
+                
+    return( round( change * 100, 2 ) )
     
 trump_rallies[ "percent_change" ] = trump_rallies.apply( percent_change, axis = 1 )
 ```
@@ -514,7 +518,43 @@ trump_rally_locations.head()
 ```
 
 ```python
+trump_rallies.to_csv( 'data/trump-rallies.csv', index_label = 'Id' )
+```
+
+```python
 trump_rally_locations.to_csv( 'data/trump-rally-locations.csv', index_label = 'Id' )
+```
+
+```python
+figure_size = [ 18, 5 ]
+fig_1, ax = plt.subplots()
+
+trump_rallies[ 'percent_change' ].hist( figsize = figure_size )
+
+plt.ylabel("Number of counties",fontsize=12)
+plt.xlabel("Percentage change",fontsize=12)
+# plt.title('Post-Rally COVID-19 Spread', fontsize=15)
+#
+# Summary statistics: mean and std
+#
+mean_change = trump_rallies[ 'percent_change' ].mean()
+std_change = trump_rallies[ 'percent_change' ].std()
+median_change = trump_rallies[ 'percent_change' ].median()
+
+s = "Median: {0:.3}\nMean: {1:.3}\nStd: {2:.3}".format( median_change, mean_change, std_change)
+#plt.text(1200, 21, s )
+
+#
+# Indicate mean and std with vertical lines
+#
+plt.axvline(x=median_change, color='orange', linewidth = 4)
+plt.axvline(x=mean_change, color='red', linewidth = 4)
+plt.axvline(x=mean_change + std_change, color='green', linewidth = 4)
+plt.axvline(x=mean_change - std_change, color='green', linewidth = 4)
+```
+
+```python
+fig_1.savefig( "viz/hist-counties-by-percent-change.png", bbox_inches = 'tight' )
 ```
 
 ### --- END --- ###
