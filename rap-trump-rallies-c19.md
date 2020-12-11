@@ -4,26 +4,25 @@ Five minutes == 750 words
 # Intro #
 
 Hi, this is Carl Parker and I'm going to be speaking about the possible
-impact of President Trump's campaign rallies on the spread of the
+impact of President Trump's 2020 campaign rallies on the spread of the
 COVID-19 virus.
 
 
 # Background #
 
-Prior to Memorial Day, the number of deaths from COVID-19 in the United
-States was dropping precipitously. At that rate of decline, COVID-19
-would have reached zero in the US in less than a month. 
+Prior to Memorial Day, the seven-day moving average of deaths from
+COVID-19 in the United States was dropping rapidly. However, shortly
+after Memorial Day, the rate of decline decelerated and then began to
+climb, peaking on August 1st.
 
-However, shortly after Memorial Day, the rate of decline first
-decelerated and then began to climb, peaking on ----.
+I want to explore the question of whether this second wave of COVID-19
+was contributed to by Trump's campaign rallies which occurred throughout
+the summer and fall of 2020. 
 
-There has been some speculation that this surge is attributable to the
-political protests that occurred during the summer in the aftermath of
-George Floyds death while in police custody. 
-
-However, my brother suggested that an alternative explanation could be
-President Trump's campaign rallies which occurred throughout the summer
-and early fall. 
+President Trump developed a reputation for not adhering to recommended
+norms with respect to COVID-19. For example, people who attended his
+rallies often did not socially distance or wear masks. President Trump
+himself usually did not wear a mask.
 
 
 # The Rallies #
@@ -74,6 +73,31 @@ Trump's rallies.
 
 Having said all of that, let's look at the numbers themselves.
 
+This is a histogram that shows the distribution of the percentage change
+in deaths after each rally. The distribution is right-skewed because
+in some cases, the number of deaths increased by a thousand percent or
+more in the 28 days following a rally.
+
+Although, there were m
+
+You can see that both median and mean are relatively close to zero.
+
+---
+
+Now, let's look at the spatial distribution of COVID-19 spread.
+
+The red marks indicates rallies where deaths increased, the green marks
+are rallies where the number of deaths decreased.
+
+What is interesting about this figure is that there seems to be
+clustering with respect to states. Consider Michigan, which is entirely
+red and Pennsylvania, which is almost entirely. Now, compare with
+Florida, which is almost entiredly green. 
+
+---
+
+This last figure shows the percentage changes over time. There appears
+to be a trend in which the number of deaths increases with time.
 
 
 # --- END --- #
