@@ -637,15 +637,27 @@ trump_rally_locations.to_csv( 'data/trump-rally-locations.csv', index_label = 'I
 # Drop unecessary columns
 #
 trump_rallies_time_series = trump_rallies.drop( [ "Population", "Lat", "Long_", "deaths_prior", "deaths_after" ], axis = 1 )
+
+def rally_colors( row ):
+    if row[ "percent_change" ] < 0:
+        return( "green" )
+    elif row[ "percent_change" ] > 0:
+        return( "red" )
+    elif row[ "percent_change" ] == 0:
+        return( "black" )
+    
+trump_rallies_time_series[ "mark_color" ] = trump_rally_time_series.apply( rally_colors, axis = 1 )
+
+trump_rallies_time_series.head()
 ```
 
 ```python
 #
 # Create the base plot
 #
-fig, ax = plt.subplots( figsize = ( 30, 30 ))
 
-trump_rallies_time.plot.scatter( "Date", "percent_change" ], color='tab:red')
+
+ax = trump_rallies_time_series.plot.scatter( x = "Date", "percent_change", s = 15, color=trump_rallies_time_series[ "mark_color" ], figsize = ( 30, 10 ), grid = True, rot = 90)
 ```
 
 ```python
