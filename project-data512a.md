@@ -577,7 +577,9 @@ fig_1.savefig( "viz/hist-counties-by-percent-change.png", bbox_inches = 'tight' 
 
 ```python
 us_map = gpd.read_file( "data/tl_2019_us_state/tl_2019_us_state.shp" )
-fig, ax = plt.subplots( figsize = ( 30, 10 ))
+fig, ax = plt.subplots( figsize = ( 30, 30 ))
+ax.set_xlim(-130, -65)
+ax.set_ylim(22, 50)
 us_map.plot( ax = ax )
 ```
 
