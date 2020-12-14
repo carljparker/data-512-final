@@ -547,19 +547,22 @@ trump_rally_locations_geo = gpd.GeoDataFrame( trump_rally_locations, crs = "EPSG
 trump_rally_locations_geo.head()
 
 # %%
+#
+# Create the base plot
+#
 fig, ax = plt.subplots( figsize = ( 30, 30 ))
+b
+#
+# Plot the US map
+#
+us_map = gpd.read_file( "data/tl_2019_us_state/tl_2019_us_state.shp" )
+us_map.plot( ax = ax, color = "#C1CDCD", alpha = 0.9, edgecolor = "black" )
 
 #
 # Scope the plot to show only the continental US
 #
 ax.set_xlim(-128, -65)
 ax.set_ylim(22, 51)
-
-#
-# Plot the US map
-#
-us_map = gpd.read_file( "data/tl_2019_us_state/tl_2019_us_state.shp" )
-us_map.plot( ax = ax, color = "#C1CDCD", alpha = 0.9, edgecolor = "black" )
 
 #
 # Add the colored data points
@@ -575,6 +578,7 @@ plt.legend( prop = {'size':15})
 
 
 # %%
+fig.savefig( "viz/geo-rallies-and-impact.png", bbox_inches = 'tight' )
 trump_rally_locations.to_csv( 'data/trump-rally-locations.csv', index_label = 'Id' )
 
 # %% [markdown]
