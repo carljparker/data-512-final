@@ -594,7 +594,7 @@ trump_rally_locations_geo.head()
 # Create the base plot
 #
 fig, ax = plt.subplots( figsize = ( 30, 30 ))
-b
+
 #
 # Plot the US map
 #
@@ -621,9 +621,37 @@ plt.legend( prop = {'size':15})
 
 ```
 
+Persist the figure and the data.
+
 ```python
 fig.savefig( "viz/geo-rallies-and-impact.png", bbox_inches = 'tight' )
 trump_rally_locations.to_csv( 'data/trump-rally-locations.csv', index_label = 'Id' )
+```
+
+# Time series plot for Trump rallies #
+
+```python
+#
+# Derive a new dataframe
+#
+# Drop unecessary columns
+#
+trump_rallies_time_series = trump_rallies.drop( [ "Population", "Lat", "Long_", "deaths_prior", "deaths_after" ], axis = 1 )
+```
+
+```python
+#
+# Create the base plot
+#
+fig, ax = plt.subplots( figsize = ( 30, 30 ))
+
+trump_rallies_time.plot.scatter( "Date", "percent_change" ], color='tab:red')
+```
+
+```python
+
+
+
 ```
 
 # Acknowledgements #
