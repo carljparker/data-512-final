@@ -112,7 +112,8 @@ import geocoder
 import numpy as np
 import pandas as pd
 import descartes
-# import geopandas
+import geopandas as gpd
+from shapely.geometry import Point, Polygon
 from matplotlib import pyplot as plt
 ```
 
