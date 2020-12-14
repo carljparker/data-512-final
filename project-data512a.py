@@ -489,16 +489,6 @@ trump_rallies.head( 35 )
 trump_rallies.tail( 35 )
 
 # %%
-trump_rally_locations = trump_rallies.drop( ["Date", "State", "County", "Combined_Key", "Population", "deaths_prior", "deaths_after" ], axis = 1 )
-trump_rally_locations.head()
-
-# %%
-trump_rallies.to_csv( 'data/trump-rallies-augmented.csv', index_label = 'Id' )
-
-# %%
-trump_rally_locations.to_csv( 'data/trump-rally-locations.csv', index_label = 'Id' )
-
-# %%
 figure_size = [ 18, 5 ]
 fig_1, ax = plt.subplots()
 
@@ -525,8 +515,22 @@ plt.axvline(x=mean_change, color='red', linewidth = 4)
 plt.axvline(x=mean_change + std_change, color='green', linewidth = 4)
 plt.axvline(x=mean_change - std_change, color='green', linewidth = 4)
 
+# %% [markdown]
+# Persist this figure and the augmented dataframe for Trump's rallies.
+
 # %%
 fig_1.savefig( "viz/hist-counties-by-percent-change.png", bbox_inches = 'tight' )
+trump_rallies.to_csv( 'data/trump-rallies-augmented.csv', index_label = 'Id' )
+
+# %% [markdown]
+# # Geospatial plots #
+
+# %% [markdown]
+# Derive a smaller dataframe that we will use for the geospatial plots.
+
+# %%
+trump_rally_locations = trump_rallies.drop( ["Date", "State", "County", "Combined_Key", "Population", "deaths_prior", "deaths_after" ], axis = 1 )
+trump_rally_locations.head()
 
 # %%
 us_map = gpd.read_file( "data/tl_2019_us_state/tl_2019_us_state.shp" )
@@ -534,6 +538,9 @@ fig, ax = plt.subplots( figsize = ( 30, 30 ))
 ax.set_xlim(-128, -65)
 ax.set_ylim(22, 51)
 us_map.plot( ax = ax )
+
+# %%
+trump_rally_locations.to_csv( 'data/trump-rally-locations.csv', index_label = 'Id' )
 
 # %% [markdown]
 # # Acknowledgements #
