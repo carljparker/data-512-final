@@ -20,8 +20,8 @@ from the table at the following location on Wikipedia.
 
 [Wikipedia: List of US state and territory abbreviations][state_abbr]
 
-The shape data for the geospatial plots is from the [US
-Census](ftp://ftp2.census.gov/geo/tiger/TIGER2019/STATE/).
+The [shape data](ftp://ftp2.census.gov/geo/tiger/TIGER2019/STATE/)
+for the geospatial plots is from the [US Census](https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html)
 
 
 ## Wikipedia licensing ##
