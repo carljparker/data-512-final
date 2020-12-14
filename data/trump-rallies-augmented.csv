@@ -28,41 +28,42 @@ Id,Date,City,State,County,Combined_Key,Lat,Long_,Population,deaths_prior,deaths_
 26,2020-10-16,Ocala,FL,Marion County,"Marion, Florida, US",29.21227113,-82.05803627,365579.0,100.0,41.0,-59.0
 27,2020-10-16,Macon,GA,Bibb County,"Bibb, Georgia, US",32.80904227,-83.70489165,153159.0,40.0,43.0,7.5
 28,2020-10-17,Muskegon,MI,Muskegon County,"Muskegon, Michigan, US",43.29123859,-86.15176712,173566.0,8.0,71.0,787.5
-29,2020-10-17,Janesville,WI,Rock County,"Rock, Wisconsin, US",42.67151616,-89.07147900000002,163354.0,13.0,29.0,123.08
-30,2020-10-18,Carson City,NV,Carson City City,"Carson Cit, Nevada, US",,,,0.0,0.0,0.0
-31,2020-10-19,Prescott,AZ,Yavapai County,"Yavapai, Arizona, US",34.59933926,-112.5538588,235099.0,7.0,20.0,185.71
-32,2020-10-19,Tucson,AZ,Pima County,"Pima, Arizona, US",32.0971334,-111.7890033,1047279.0,32.0,40.0,25.0
-33,2020-10-20,Erie,PA,Erie County,"Erie, Pennsylvania, US",41.99253829,-80.03301954,269728.0,2.0,14.0,600.0
-34,2020-10-21,Gastonia,NC,Gaston County,"Gaston, North Carolina, US",35.29373559,-81.17477045,224529.0,33.0,75.0,127.27
-35,2020-10-23,The Villages,FL,Sumpter County,"Sumpter, Florida, US",,,,0.0,0.0,0.0
-36,2020-10-23,Pensacola,FL,Escambia County,"Escambia, Florida, US",30.67652764,-87.37284571,318316.0,54.0,32.0,-40.74
-37,2020-10-24,Lumberton,NC,Robeson County,"Robeson, North Carolina, US",34.64244496,-79.10250529999998,130625.0,24.0,19.0,-20.83
-38,2020-10-24,Circleville,OH,Pickaway County,"Pickaway, Ohio, US",39.64170392,-83.0243386,58457.0,2.0,2.0,-0.0
-39,2020-10-24,Waukesha,WI,Waukesha County,"Waukesha, Wisconsin, US",43.01833055,-88.30431188,404198.0,38.0,76.0,100.0
-40,2020-10-25,Manchester,NH,Hillsborough County,"Hillsborough, New Hampshire, US",42.91537785,-71.7200253,417025.0,27.0,18.0,-33.33
-41,2020-10-26,Allentown,PA,Lehigh County,"Lehigh, Pennsylvania, US",40.6154815,-75.59435245,369318.0,16.0,17.0,6.25
-42,2020-10-26,Lititz,PA,Lancaster County,"Lancaster, Pennsylvania, US",40.03904563,-76.24770128,545724.0,19.0,43.0,126.32
-43,2020-10-26,Martinsburg,PA,Blair County,"Blair, Pennsylvania, US",40.47961444,-78.34917412,121829.0,12.0,35.0,191.67
-44,2020-10-27,Lansing,MI,Ingham County,"Ingham, Michigan, US",42.59716886,-84.37472069,292406.0,18.0,42.0,133.33
-45,2020-10-27,West Salem,WI,La Crosse County,"La Crosse, Wisconsin, US",43.90632465,-91.11451093,118016.0,20.0,13.0,-35.0
-46,2020-10-27,Omaha,NE,Douglas County,"Douglas, Nebraska, US",41.29518299,-96.15085305,571327.0,36.0,78.0,116.67
-47,2020-10-28,Bullhead City,AZ,Mohave County,"Mohave, Arizona, US",35.70471703,-113.7577902,212181.0,7.0,30.0,328.57
-48,2020-10-28,Goodyear,AZ,Maricopa County,"Maricopa, Arizona, US",33.34835867,-112.4918154,4485414.0,284.0,417.0,46.83
-49,2020-10-29,Tampa,FL,Hillsborough County,"Hillsborough, Florida, US",27.9276559,-82.32013172,1471968.0,184.0,141.0,-23.37
-50,2020-10-30,Waterford Township,MI,Oakland County,"Oakland, Michigan, US",42.66090111,-83.38595416,1257584.0,43.0,119.0,176.74
-51,2020-10-30,Green Bay,WI,Brown County,"Brown, Wisconsin, US",44.4526553,-88.00411844,264542.0,56.0,23.0,-58.93
-52,2020-10-30,Rochester,MN,Olmsted County,"Olmsted, Minnesota, US",44.00374114,-92.40209944,158293.0,2.0,4.0,100.0
-53,2020-10-31,Newtown,PA,Bucks County,"Bucks, Pennsylvania, US",40.33682119,-75.10836643,628270.0,19.0,48.0,152.63
-54,2020-10-31,Reading,PA,Berks County,"Berks, Pennsylvania, US",40.41570541,-75.92457766,421164.0,32.0,34.0,6.25
-55,2020-10-31,Butler,PA,Butler County,"Butler, Pennsylvania, US",40.91152759,-79.91351055,187853.0,5.0,43.0,760.0
-56,2020-10-31,Montoursville,PA,Lycoming County,"Lycoming, Pennsylvania, US",41.34310539,-77.06629984,113299.0,7.0,6.0,-14.29
-57,2020-11-01,Washington,MI,Macomb County,"Macomb, Michigan, US",42.69158356,-82.92752801,873972.0,77.0,169.0,119.48
-58,2020-11-01,Dubuque,IA,Dubuque County,"Dubuque, Iowa, US",42.46815349,-90.88181925,97311.0,20.0,32.0,60.0
-59,2020-11-01,Hickory,NC,Catawba County,"Catawba, North Carolina, US",35.66211129,-81.2132617,159551.0,10.0,23.0,130.0
-60,2020-11-01,Rome,GA,Floyd County,"Floyd, Georgia, US",34.26268279,-85.21577392,98498.0,16.0,21.0,31.25
-61,2020-11-01,Opa-locka,FL,Miami-Dade County,"Miami-Dade, Florida, US",25.6112362,-80.55170587,2716940.0,431.0,176.0,-59.16
-62,2020-11-02,Fayetteville,NC,Cumberland County,"Cumberland, North Carolina, US",35.04762133,-78.82623165,335509.0,24.0,15.0,-37.5
-63,2020-11-02,Scranton,PA,Lackawanna County,"Lackawanna, Pennsylvania, US",41.43564672,-75.60379201,209674.0,2.0,12.0,500.0
-64,2020-11-02,Traverse City,MI,Grand Traverse County,"Grand Traverse, Michigan, US",44.69565625,-85.55585247,93088.0,6.0,5.0,-16.67
-65,2020-11-02,Kenosha,WI,Kenosha County,"Kenosha, Wisconsin, US",42.57639354,-88.04051686,169561.0,30.0,48.0,60.0
-66,2020-11-02,Grand Rapids,MI,Kent County,"Kent, Michigan, US",43.03197711,-85.54934642,656955.0,14.0,156.0,1014.29
+29,2020-10-17,Muskegon,MI,Muskegon County,"Muskegon, Michigan, US",43.29123859,-86.15176712,173566.0,8.0,71.0,787.5
+30,2020-10-17,Janesville,WI,Rock County,"Rock, Wisconsin, US",42.67151616,-89.07147900000002,163354.0,13.0,29.0,123.08
+31,2020-10-18,Carson City,NV,Carson City City,"Carson Cit, Nevada, US",,,,0.0,0.0,0.0
+32,2020-10-19,Prescott,AZ,Yavapai County,"Yavapai, Arizona, US",34.59933926,-112.5538588,235099.0,7.0,20.0,185.71
+33,2020-10-19,Tucson,AZ,Pima County,"Pima, Arizona, US",32.0971334,-111.7890033,1047279.0,32.0,40.0,25.0
+34,2020-10-20,Erie,PA,Erie County,"Erie, Pennsylvania, US",41.99253829,-80.03301954,269728.0,2.0,14.0,600.0
+35,2020-10-21,Gastonia,NC,Gaston County,"Gaston, North Carolina, US",35.29373559,-81.17477045,224529.0,33.0,75.0,127.27
+36,2020-10-23,The Villages,FL,Sumpter County,"Sumpter, Florida, US",,,,0.0,0.0,0.0
+37,2020-10-23,Pensacola,FL,Escambia County,"Escambia, Florida, US",30.67652764,-87.37284571,318316.0,54.0,32.0,-40.74
+38,2020-10-24,Lumberton,NC,Robeson County,"Robeson, North Carolina, US",34.64244496,-79.10250529999998,130625.0,24.0,19.0,-20.83
+39,2020-10-24,Circleville,OH,Pickaway County,"Pickaway, Ohio, US",39.64170392,-83.0243386,58457.0,2.0,2.0,-0.0
+40,2020-10-24,Waukesha,WI,Waukesha County,"Waukesha, Wisconsin, US",43.01833055,-88.30431188,404198.0,38.0,76.0,100.0
+41,2020-10-25,Manchester,NH,Hillsborough County,"Hillsborough, New Hampshire, US",42.91537785,-71.7200253,417025.0,27.0,18.0,-33.33
+42,2020-10-26,Allentown,PA,Lehigh County,"Lehigh, Pennsylvania, US",40.6154815,-75.59435245,369318.0,16.0,17.0,6.25
+43,2020-10-26,Lititz,PA,Lancaster County,"Lancaster, Pennsylvania, US",40.03904563,-76.24770128,545724.0,19.0,43.0,126.32
+44,2020-10-26,Martinsburg,PA,Blair County,"Blair, Pennsylvania, US",40.47961444,-78.34917412,121829.0,12.0,35.0,191.67
+45,2020-10-27,Lansing,MI,Ingham County,"Ingham, Michigan, US",42.59716886,-84.37472069,292406.0,18.0,42.0,133.33
+46,2020-10-27,West Salem,WI,La Crosse County,"La Crosse, Wisconsin, US",43.90632465,-91.11451093,118016.0,20.0,13.0,-35.0
+47,2020-10-27,Omaha,NE,Douglas County,"Douglas, Nebraska, US",41.29518299,-96.15085305,571327.0,36.0,78.0,116.67
+48,2020-10-28,Bullhead City,AZ,Mohave County,"Mohave, Arizona, US",35.70471703,-113.7577902,212181.0,7.0,30.0,328.57
+49,2020-10-28,Goodyear,AZ,Maricopa County,"Maricopa, Arizona, US",33.34835867,-112.4918154,4485414.0,284.0,417.0,46.83
+50,2020-10-29,Tampa,FL,Hillsborough County,"Hillsborough, Florida, US",27.9276559,-82.32013172,1471968.0,184.0,141.0,-23.37
+51,2020-10-30,Waterford Township,MI,Oakland County,"Oakland, Michigan, US",42.66090111,-83.38595416,1257584.0,43.0,119.0,176.74
+52,2020-10-30,Green Bay,WI,Brown County,"Brown, Wisconsin, US",44.4526553,-88.00411844,264542.0,56.0,23.0,-58.93
+53,2020-10-30,Rochester,MN,Olmsted County,"Olmsted, Minnesota, US",44.00374114,-92.40209944,158293.0,2.0,4.0,100.0
+54,2020-10-31,Newtown,PA,Bucks County,"Bucks, Pennsylvania, US",40.33682119,-75.10836643,628270.0,19.0,48.0,152.63
+55,2020-10-31,Reading,PA,Berks County,"Berks, Pennsylvania, US",40.41570541,-75.92457766,421164.0,32.0,34.0,6.25
+56,2020-10-31,Butler,PA,Butler County,"Butler, Pennsylvania, US",40.91152759,-79.91351055,187853.0,5.0,43.0,760.0
+57,2020-10-31,Montoursville,PA,Lycoming County,"Lycoming, Pennsylvania, US",41.34310539,-77.06629984,113299.0,7.0,6.0,-14.29
+58,2020-11-01,Washington,MI,Macomb County,"Macomb, Michigan, US",42.69158356,-82.92752801,873972.0,77.0,169.0,119.48
+59,2020-11-01,Dubuque,IA,Dubuque County,"Dubuque, Iowa, US",42.46815349,-90.88181925,97311.0,20.0,32.0,60.0
+60,2020-11-01,Hickory,NC,Catawba County,"Catawba, North Carolina, US",35.66211129,-81.2132617,159551.0,10.0,23.0,130.0
+61,2020-11-01,Rome,GA,Floyd County,"Floyd, Georgia, US",34.26268279,-85.21577392,98498.0,16.0,21.0,31.25
+62,2020-11-01,Opa-locka,FL,Miami-Dade County,"Miami-Dade, Florida, US",25.6112362,-80.55170587,2716940.0,431.0,176.0,-59.16
+63,2020-11-02,Fayetteville,NC,Cumberland County,"Cumberland, North Carolina, US",35.04762133,-78.82623165,335509.0,24.0,15.0,-37.5
+64,2020-11-02,Scranton,PA,Lackawanna County,"Lackawanna, Pennsylvania, US",41.43564672,-75.60379201,209674.0,2.0,12.0,500.0
+65,2020-11-02,Traverse City,MI,Grand Traverse County,"Grand Traverse, Michigan, US",44.69565625,-85.55585247,93088.0,6.0,5.0,-16.67
+66,2020-11-02,Kenosha,WI,Kenosha County,"Kenosha, Wisconsin, US",42.57639354,-88.04051686,169561.0,30.0,48.0,60.0
+67,2020-11-02,Grand Rapids,MI,Kent County,"Kent, Michigan, US",43.03197711,-85.54934642,656955.0,14.0,156.0,1014.29

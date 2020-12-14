@@ -84,18 +84,25 @@ And also:
 To be clear, I will look at COVID-19 deaths in the control counties before and after the date of each Trump rally _even though no Trump rally occurred in that county_.
 
 
-## Unknowns ##
+# Deaths vs Infections ("Cases") #
+
+
+Early feedback questioned measuring deaths vs infections aka "cases".
+
+I chose to measure deaths because a "case" is typically defined simply as a positive test result. Therefore, the term case is a bit misleading in that it _seems_ to imply that someone is sick, but actually it doesn't even imply that someone is contagious or even that they are recently infected. An individual could have been infected by COVID-19 months earlier, been mostly (or perhaps completely) asymptomatic and therefore not even known that they were infected. Much later, the are tested and show up as positive. The irony of such cases is that not only is the individual not a danger to others, they actually make the community safer by virtue of their immunity.
+
+
+## Unknowns that could affect the results ##
 
 
 I have, so far, identified a couple unknowns that could affect the success of this investigation.
 
-One unknown is that Trump's rallies were not always held in an urban center. For example, some were held at airports. The president would fly in, speak at a rally at the airport, and then fly out. **In these cases, it is not certain where the attendees originated from; that is, we can't assume that they came from the nearest urban center.** 
+- **We don’t know how many people were at each rally.** There could be a lot of variability there, and the number of people at the rally is (almost certainly) an important factor in how many people contract the virus at the rally and therefore how much the virus could spread in the aftermath of the rally.
+- **We don’t know if the people who attended a rally resided in the county where the rally was held.** They might have traveled there and then gone back home afterwards . . . and infected people in their home county. The subsequent deaths would then show up in that county rather than the one in which the rally was held. 
+- **Trump's rallies are not uniformly distributed across the United States.** This could be for reasons such as campaign strategy. But in any case, regional differences between areas that hosted the rallies and those that didn't could introduce bias into the data. These differences could include local and state policies with respect to behaviors, such as masking, that affect the spread of COVID-19. Also, on a more subtle level, regional differences in culture could also affect viral spread. Some areas, irrespective of official policies, might be more or less likely to spread the vius. For example, the culture in Seattle, WA has a reputation for being somewhat insular. Early in the pandemic, the (relatively) slow community spread in Seattle was attributed to this cultural characteristic.
 
-To take an example, on September 3, 2020, Trump spoke at a rally at Arnold Palmer Regional Airport outside Latrobe, PA. However, we can't necessarily infer from this that all the attendees were from Latrobe; they might have traveled in from out of area. More importantly, we don't know where the attendees traveled _to_ after the rally. 
 
-(Actually, this issue, that attendees might reside outside the area where the rally was held, applies to some degree even for rallies held inside city centers.)
-
-**Another unknown is that the locations of Trump's rallies are not uniformly distributed across the United States.** This could be for reasons such as campaign strategy. But in any case, regional differences between areas that hosted the rallies and those that didn't could introduce bias into the data.
+# Import required packages #
 
 ```python
 import os
@@ -104,7 +111,15 @@ import re
 import geocoder
 import numpy as np
 import pandas as pd
+import descartes
+# import geopandas
 from matplotlib import pyplot as plt
+```
+
+Import constants
+
+```python
+import constants
 ```
 
 ```python
@@ -153,11 +168,11 @@ g.json[ 'raw' ][ 'address' ][ 'adminDistrict2' ]
 ```
 
 ```python
-geocoder.bing( 'The Villages' + ", " + 'FL', key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ]
+geocoder.bing( 'Newport News' + ", " + 'VA', key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ]
 ```
 
 ```python
-geocoder.bing( 'The Villages' + ", " + 'FL', key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ][ 'address' ]
+geocoder.bing( 'Newport News' + ", " + 'VA', key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ][ 'address' ]
 ```
 
 ```python
@@ -339,7 +354,7 @@ covid_19_deaths_by_rally.drop_duplicates( inplace = True )
 len( covid_19_deaths_by_rally ) - len( covid_19_deaths_by_rally.drop_duplicates() )
 ```
 
-Dropping rows leaves gaps in the index. For example, note that `48` is missing below. Renumber the index.
+Dropping rows leaves gaps in the index. For example, note that `29` is missing below. Renumber the index.
 
 ```python
 covid_19_deaths_by_rally.index
@@ -380,6 +395,7 @@ def convert_to_iso( string ):
     my_date = datetime.date( int( '20' + m.group( 3 ) ), int( m.group( 1 ) ), int( m.group( 2 ) ) )
     return( my_date.isoformat() )
 
+date_index = covid_19_deaths_by_rally.index
 iso_index = date_index.map( convert_to_iso )
 covid_19_deaths_by_rally.index = iso_index
 ```
@@ -426,7 +442,8 @@ covid_19_deaths_by_rally.loc[ :, trump_rallies.loc[ 2, 'Combined_Key'] ].max()
 ```
 
 ```python
-time_interval = datetime.timedelta( days = 28 )
+my_date = datetime.date(2020, 12,14)
+time_interval = datetime.timedelta( days = constants.TIME_INTERVAL )
 
 rally_date_str = trump_rallies.loc[ 1, 'Date']
 
@@ -434,7 +451,7 @@ before_date_str = ( my_date.fromisoformat( rally_date_str ) - time_interval ).is
 after_date_str = ( my_date.fromisoformat( rally_date_str ) + time_interval ).isoformat()
 ```
 
-Deaths each day for the 28 days prior to Trump's rally.
+Deaths each day for `TIME_INTERVAL` days _prior_ to Trump's rally.
 
 ```python
 covid_19_deaths_by_rally_no_accumulate.loc[ :, trump_rallies.loc[ 0, 'Combined_Key'] ].loc[ before_date_str:rally_date_str ]
@@ -466,7 +483,7 @@ covid_19_deaths_by_rally_no_accumulate.loc[ :, trump_rallies.loc[ 4, 'Combined_K
 
 ```python
 def deaths_prior( row ):
-    time_interval = datetime.timedelta( days = 28 )
+    time_interval = datetime.timedelta( days = constants.TIME_INTERVAL )
     rally_date_str = row[ 'Date'] 
     before_date_str = ( my_date.fromisoformat( rally_date_str ) - time_interval ).isoformat()
     return( covid_19_deaths_by_rally_no_accumulate.loc[ :, row[ 'Combined_Key' ] ].loc[ before_date_str:rally_date_str ].sum() )
@@ -476,7 +493,7 @@ trump_rallies[ "deaths_prior" ] = trump_rallies.apply( deaths_prior, axis = 1 )
 
 ```python
 def deaths_after( row ):
-    time_interval = datetime.timedelta( days = 28 )
+    time_interval = datetime.timedelta( days = constants.TIME_INTERVAL )
     rally_date_str = row[ 'Date'] 
     after_date_str = ( my_date.fromisoformat( rally_date_str ) + time_interval ).isoformat()
     return( covid_19_deaths_by_rally_no_accumulate.loc[ :, row[ 'Combined_Key' ] ].loc[ rally_date_str:after_date_str ].sum() )
@@ -502,7 +519,7 @@ def percent_change( row ):
 trump_rallies[ "percent_change" ] = trump_rallies.apply( percent_change, axis = 1 )
 ```
 
-Deaths each day for the 28 days after Trump's rally.
+Deaths each day for `TIME_INTERVAL` days _after_ Trump's rally.
 
 ```python
 trump_rallies.head( 35 )
@@ -518,7 +535,7 @@ trump_rally_locations.head()
 ```
 
 ```python
-trump_rallies.to_csv( 'data/trump-rallies.csv', index_label = 'Id' )
+trump_rallies.to_csv( 'data/trump-rallies-augmented.csv', index_label = 'Id' )
 ```
 
 ```python
@@ -542,7 +559,7 @@ std_change = trump_rallies[ 'percent_change' ].std()
 median_change = trump_rallies[ 'percent_change' ].median()
 
 s = "Median: {0:.3}\nMean: {1:.3}\nStd: {2:.3}".format( median_change, mean_change, std_change)
-#plt.text(1200, 21, s )
+plt.text(1200, 22, s )
 
 #
 # Indicate mean and std with vertical lines
@@ -556,5 +573,21 @@ plt.axvline(x=mean_change - std_change, color='green', linewidth = 4)
 ```python
 fig_1.savefig( "viz/hist-counties-by-percent-change.png", bbox_inches = 'tight' )
 ```
+
+# Acknowledgements #
+
+Resources that I learned from while producing this notebook.
+
+
+## Constants in Python ##
+Guidance on emulating constants in Python from Jonathan Hsu at [Medium](https://medium.com/better-programming/does-python-have-constants-3b8249dc8b7b)
+
+
+## GeoPandas ##
+
+_GeoPandas 101: Plot any data with a latitude and longitude on a map_ by Ryan Stewart at [TowardsDataScience](https://towardsdatascience.com/geopandas-101-plot-any-data-with-a-latitude-and-longitude-on-a-map-98e01944b972)
+
+GeoPandas install [documentation](https://geopandas.org/install.html)
+
 
 ### --- END --- ###
