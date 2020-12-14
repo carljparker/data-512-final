@@ -584,7 +584,7 @@ trump_rally_geo_points = [Point( xy ) for xy in zip( trump_rally_locations[ "Lon
 #
 # Create the geo-dataframe using geopandas
 #
-trump_rally_locations_geo = gpd.GeoDataFrame( trump_rally_locations, crs = “EPSG:4326”, geometry = trump_rally_geo_points )
+trump_rally_locations_geo = gpd.GeoDataFrame( trump_rally_locations, crs = "EPSG:4326", geometry = trump_rally_geo_points )
 
 trump_rally_locations_geo.head()
 ```
@@ -595,6 +595,8 @@ fig, ax = plt.subplots( figsize = ( 30, 30 ))
 ax.set_xlim(-128, -65)
 ax.set_ylim(22, 51)
 us_map.plot( ax = ax )
+
+trump_rally_locations_geo.plot( ax = ax, color = "yellow" )
 ```
 
 ```python
