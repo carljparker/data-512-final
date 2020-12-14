@@ -551,9 +551,10 @@ us_map = gpd.read_file( "data/tl_2019_us_state/tl_2019_us_state.shp" )
 fig, ax = plt.subplots( figsize = ( 30, 30 ))
 ax.set_xlim(-128, -65)
 ax.set_ylim(22, 51)
-us_map.plot( ax = ax )
+us_map.plot( ax = ax, color = "#F0F8FF" )
 
-trump_rally_locations_geo.plot( ax = ax, color = "yellow" )
+trump_rally_locations_geo[ trump_rally_locations_geo[ "percent_change" ] > 0 ].plot( ax = ax, color = "red" )
+trump_rally_locations_geo[ trump_rally_locations_geo[ "percent_change" ] < 0 ].plot( ax = ax, color = "green" )
 
 # %%
 trump_rally_locations.to_csv( 'data/trump-rally-locations.csv', index_label = 'Id' )
