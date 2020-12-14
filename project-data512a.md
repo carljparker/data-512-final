@@ -575,6 +575,12 @@ plt.axvline(x=mean_change - std_change, color='green', linewidth = 4)
 fig_1.savefig( "viz/hist-counties-by-percent-change.png", bbox_inches = 'tight' )
 ```
 
+```python
+us_map = gpd.read_file( "data/tl_2019_us_state/tl_2019_us_state.shp" )
+fig, ax = plt.subplots( figsize = ( 30, 10 ))
+us_map.plot( ax = ax )
+```
+
 # Acknowledgements #
 
 Resources that I learned from while producing this notebook.
