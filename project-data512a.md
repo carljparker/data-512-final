@@ -568,11 +568,25 @@ trump_rallies.to_csv( 'data/trump-rallies-augmented.csv', index_label = 'Id' )
 # Geospatial plots #
 
 
-Derive a smaller dataframe that we will use for the geospatial plots.
+Derive a smaller geo-dataframe that we will use for the geospatial plots.
 
 ```python
+#
+# Drop unecessary columns
+#
 trump_rally_locations = trump_rallies.drop( ["Date", "State", "County", "Combined_Key", "Population", "deaths_prior", "deaths_after" ], axis = 1 )
-trump_rally_locations.head()
+
+# 
+# Create mappable Points from the Lat and Long_ columns
+#
+trump_rally_geo_points = [Point( xy ) for xy in zip( trump_rally_locations[ "Long_" ], trump_rally_locations[ "Lat" ] ) ]
+
+#
+# Create the geo-dataframe using geopandas
+#
+trump_rally_locations_geo = gpd.GeoDataFrame( trump_rally_locations, crs = “EPSG:4326”, geometry = trump_rally_geo_points )
+
+trump_rally_locations_geo.head()
 ```
 
 ```python
