@@ -37,15 +37,10 @@ _**The yellow arrows in the two graphs below identify May 26, 2020, that is, the
 ![](viz/2020-10-23_original-screen-capture.png)
 
 
-### COVID-19 deaths: Cumulative ###
-
-![](viz/2020-10-23_accumulated-deaths-anno.png)
+## Research Question and Hypothesis ##
 
 
-## Research Questions and Hypothesis ##
-
-
-My research question is whether it is possible to identify increases in the spread of COVID-19 subsequent to President Trump's rallies and also relatively proximal to where the rallies were held. 
+My research question is whether it is possible to identify increases in the spread of COVID-19 subsequent to President Trump's rallies and also proximal to where the rallies were held. 
 
 My hypothesis is that I _can_ identify increases in COVID-19 mortality associated with President Trump's rallies and that these increases are greater than we would expect given the incidence of COVID-19 prior to each rally.
 
@@ -75,9 +70,9 @@ _The time interval I have chosen is **42 days (six weeks)**._ This is the longes
 
 Early feedback questioned measuring deaths vs infections aka "cases".
 
-A _**case**_ is typically defined simply as a positive test result. Therefore, the term _case_ is a bit misleading in that it _seems_ to imply that someone is sick, but actually it doesn't imply that someone is symptomatic or that they are contagious or even that they are recently infected. An individual could have been infected by COVID-19 months earlier, been mostly (or perhaps completely) asymptomatic and therefore not even known that they were infected. Much later, they are tested and show up as positive. The irony of such cases is that not only is the individual not a danger to others, they actually make the community safer by virtue of their immunity.
+A _**case**_ is typically defined simply as a positive test result. Therefore, the term _case_ is a bit misleading in that it _seems_ to imply that someone is sick, but actually it doesn't imply that someone is symptomatic or that they are contagious or even that they are recently infected. An individual could have been infected by COVID-19 months earlier, been mostly (or perhaps completely) asymptomatic and therefore not even know that they were infected. Much later, they are tested and show up as positive. The irony of such cases is that not only is the individual not a danger to others, they actually make the community safer by virtue of their immunity.
 
-At the same time, measuring deaths is not without issues either. The main issue is that there might be a significant interval between when an individual is infected by COVID-19 and when they die. For the purposes of this project, in which I am trying to measure the contribution of President Trump's rallies to the spread of the virus, if I measure deaths inside an relatively short interval after the rally then I risk not capturing those deaths that haven't yet occurred. On the other hand, if I extend the interval, I risk the deaths that I capture in the data might actually have been caused by viral spread from other factors.
+At the same time, measuring deaths is not without issues either. The main issue is that there might be a significant interval between when an individual is infected by COVID-19 and when they die. For the purposes of this project--in which I am trying to measure the contribution of President Trump's rallies to the spread of the virus--if I measure deaths inside a relatively short interval after the rally then I risk not capturing those deaths that haven't yet occurred. On the other hand, if I extend the interval, I risk that the deaths that I capture in the data might actually have been caused by viral spread from other factors.
 
 All that said, I chose to measure deaths rather than cases. In addition to the factors above, I chose deaths because, in the final analysis, it is the outcome that we care most about. If people only became infected with COVID-19, but never died, the current pandemic would probably have much less urgency.
 
@@ -111,7 +106,47 @@ Considerations with the Stanford study and comparison to the current study:
 - For the current study, I also considered comparing to a set of _control counties_. However, selecting a set of such counties turned out to be remarkably fraught; so instead, I settled on a much simpler methodology. It is dissapointing that the Stanford researchers do not provide their placebo counties or their criteria for selecting them.
 
 
-# Import required packages #
+## Findings ##
+
+
+I found that in **39** counties, the number of deaths following a Trump rally increased, sometimes dramatically. In **25** counties, the number of deaths following a Trump rally decreased. And in **4** counties, the number of deaths stayed the same--that is, there were no deaths before or after the rally.
+
+
+The following histogram shows the distributions of the percentages. From the histogram, you can see that the mean percentage increase is 140%. Note however, that while increases can go above 100%, decreases are capped at 100%, so this could account to some extent for the right-skewing of the histogram. Note also that the median at 14.2 is relatively close to zero, which reflects that subsequent to a fair percentage of the rallies COVID-19 deaths either decreased or stayed the same.
+
+
+![](viz/hist-counties-by-percent-change.png)
+
+
+The following geospatial plot shows the distribution of the rallies in the United States and which rallies showed increases or decreases. Note that the plot seems to indicate clustering both at the state level (Arizona and Florida) and within states (Michigan, Pennsylvania, North Carolina).
+
+
+![](viz/geo-rallies-and-impact.png)
+
+
+The following time-series plot shows whether rallies at a particular point in time were followed by increases (red) or decreases (green) in COVID-19 deaths. Yellow indicates no change. From the plot, it appears that the number of rallies that result in increases is higher later in the year than earlier in the year. Also, the number of high-magnitude increases is somewhat greater toward the end of the year.
+
+
+![](viz/trump-rallies-time-series.png)
+
+
+## Conclusions ##
+
+
+Overall, the findings appear to be inconclusive. 
+
+I did find many (39) locations in which COVID-19 deaths increased in the aftermath of Trump campaign rallies--and in some cases, these increases were dramatic.
+
+However, there were also many locations (29) in which deaths stayed the same or declined.
+
+Also, the increases in the COVID-19 related deaths appear to be clustered which suggests that regional factors contributed to COVID-19 spread rather than (only) the Trump rally. Finally, COVID-19 related deaths following Trump rallies appear to increase with time, that is, they mirror the general progression of the pandemic, which again suggests that the Trump rally is not the (only) contributing factor.
+
+
+
+# Implementation #
+
+
+## Import required packages ##
 
 ```python
 import os
@@ -126,7 +161,7 @@ from shapely.geometry import Point, Polygon
 from matplotlib import pyplot as plt
 ```
 
-# Import constants used in the code #
+## Import constants used in the code ##
 
 ```python
 import constants
@@ -457,14 +492,12 @@ trump_rallies[ "deaths_after" ] = trump_rallies.apply( deaths_after, axis = 1 )
 def percent_change( row ):
     deaths_prior = row[ "deaths_prior" ]
     deaths_after = row[ "deaths_after" ]
-    if ( (deaths_prior) == 0 ):
-        return( 0 )
-    if ( (deaths_after) == 0 ):
+    if ( (deaths_prior) == (deaths_after) ):
         return( 0 )
     if ( deaths_prior < deaths_after ):
-        change = ( deaths_after - deaths_prior ) / deaths_prior
+        change = ( deaths_after - deaths_prior ) / ( 1 if deaths_prior == 0 else deaths_prior )
     else:
-        change = (-1) * ( deaths_prior - deaths_after ) / deaths_prior                 
+        change = (-1) * ( deaths_prior - deaths_after ) / ( 1 if deaths_prior == 0 else deaths_prior )                 
     return( round( change * 100, 2 ) )
     
 trump_rallies[ "percent_change" ] = trump_rallies.apply( percent_change, axis = 1 )
@@ -478,6 +511,25 @@ trump_rallies.head( 35 )
 
 ```python
 trump_rallies.tail( 35 )
+```
+
+### Number of counties where COVID-19 deaths increased ###
+
+```python
+trump_rallies[ trump_rallies[ "percent_change" ] > 0 ][ "percent_change" ].count()
+```
+
+
+### Number of counties where COVID-19 deaths decreased ###
+
+```python
+trump_rallies[ trump_rallies[ "percent_change" ] < 0 ][ "percent_change" ].count()
+```
+
+### Number of counties where COVID-19 deaths stayed the same ###
+
+```python
+trump_rallies[ trump_rallies[ "percent_change" ] == 0 ][ "percent_change" ].count()
 ```
 
 ## Histogram to see distribution of percentages ##
@@ -608,7 +660,11 @@ trump_rallies_time_series.head()
 ```
 
 ```python
-ax = trump_rallies_time_series.plot.scatter( x = "Date", y = "percent_change", s = 75, color=trump_rallies_time_series[ "mark_color" ], figsize = ( 30, 10 ), grid = True, rot = 90)
+ax = trump_rallies_time_series.plot.scatter( x = "Date", y = "percent_change", s = 75, color=trump_rallies_time_series[ "mark_color" ], figsize = ( 30, 10 ), grid = True, rot = 90 )
+```
+
+```python
+ax.figure.savefig( "viz/trump-rallies-time-series.png", bbox_inches = 'tight')
 ```
 
 # Acknowledgements #
