@@ -26,7 +26,7 @@ Prior to May 25, 2020, COVID-19 deaths in the United States were falling precipi
 
 The date, May 25, 2020, is significant in that it is the date on which George Floyd died while in police custody in Minneapolis, MN. Subsequent to Floyd's death, protests occurred in over 2,000 cities in the United States. It has been suggested that the George Floyd Protests might have contributed to triggering the second wave of COVID-19. 
 
-This "hypothesis" is confounded, however, by summer political campaigning in the run up to the 2020 Elections. In particular, President Trump was notable for holding campaign rallies in which the president did not follow normative behavior to control COVID-19 infections and neither did many of the rally attendees--possibly following the president's lead. These became known as _super-spreader rallies_. Some news agencies have reported that COVID-19 infections spiked in the areas where these rallies had been recently held. However, I have not found a _systematic_ investigation of whether and to what extent the rallies were correlated with COVID-19 spread.
+This "hypothesis" is confounded, however, by summer political campaigning in the run up to the 2020 Elections. In particular, President Trump was notable for holding campaign rallies in which the president did not follow normative behavior to control COVID-19 infections and neither did many of the rally attendees--possibly following the president's lead. These became known as _super-spreader rallies_. 
 
 
 _**The yellow arrows in the two graphs below identify May 26, 2020, that is, the day after George Floyd died while in police custody.**_
@@ -138,15 +138,7 @@ import constants
 !cat constants.py
 ```
 
-```python
-#
-# Note that the BING_API_KEY variable needs to be set with your API key
-# in the console window from which you launch this Jupyter notebook.
-#
-g = geocoder.bing( 'Kenosha,s WI', key=os.environ[ 'BING_API_KEY' ] )
-
-print( g.json[ 'raw' ][ 'address' ][ 'adminDistrict2' ] )
-```
+## Read location data for Trump rallies ##
 
 ```python
 trump_rallies = pd.read_csv('data/trump-rallies.csv', 
@@ -157,6 +149,8 @@ trump_rallies = pd.read_csv('data/trump-rallies.csv',
         na_values='?')
 ```
 
+### View the Trump rally data ###
+
 ```python
 trump_rallies.head()
 ```
@@ -165,6 +159,8 @@ trump_rallies.head()
 trump_rallies.tail()
 ```
 
+## Use geocoding to obtain county locations for the Trump rallies ##
+
 ```python
 geocoder.bing( 'Newport News' + ", " + 'VA', key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ]
 ```
@@ -172,6 +168,8 @@ geocoder.bing( 'Newport News' + ", " + 'VA', key=os.environ[ 'BING_API_KEY' ] ).
 ```python
 geocoder.bing( 'Newport News' + ", " + 'VA', key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ][ 'address' ]
 ```
+
+### Use `apply` to create an additional column with the county information ###
 
 ```python
 def gcode( row ):
@@ -182,21 +180,14 @@ def gcode( row ):
     else:
         return( 'Sumpter County' )
 
-```
-
-```python
 trump_rallies[ 'County' ] = trump_rallies.apply( gcode, axis = 1 )
 ```
 
 ```python
-trump_rallies.loc[ : , 'County' ].head()
+trump_rallies.head()
 ```
 
-```python
-trump_rallies.loc[ : , 'County' ].tail()
-```
-
-# Read time series data from Johns-Hopkins COVID-19 repository #
+## Read time series data for COVID-19 deaths from the Johns-Hopkins repository ##
 
 ```python
 covid_19_time_series_by_county = pd.read_csv('data/time_series_covid19_deaths_US.csv', 
@@ -207,9 +198,7 @@ covid_19_time_series_by_county = pd.read_csv('data/time_series_covid19_deaths_US
         na_values='?')
 ```
 
-```python
-covid_19_time_series_by_county.shape
-```
+### View the time series data ###
 
 ```python
 covid_19_time_series_by_county.head()
@@ -219,20 +208,13 @@ covid_19_time_series_by_county.head()
 covid_19_time_series_by_county.tail()
 ```
 
-Most of the columns are the COVID-19 deaths for a given date. Show the non-date columns.
+### The county column ( `Admin2`) contains many duplicates ###
+
+
+The `Admin2` column contains the county. However, we can't use it to merge because it contain many duplicates.
 
 ```python
-covid_19_time_series_by_county.columns.array[ 0:12 ]
-```
-
-The `Admin2` column contains the county. There are many duplicates in that column; we can't merge on it.
-
-```python
-len( covid_19_time_series_by_county.loc[ :, 'Admin2' ] ) 
-```
-
-```python
-len( covid_19_time_series_by_county.loc[ :, 'Admin2' ].unique() )
+len( covid_19_time_series_by_county.loc[ :, 'Admin2' ] ) - len( covid_19_time_series_by_county.loc[ :, 'Admin2' ].unique() )
 ```
 
 The `Combined_Key` column provides a _primary key_ that uniquely identifies the row.
@@ -241,13 +223,10 @@ The `Combined_Key` column provides a _primary key_ that uniquely identifies the 
 covid_19_time_series_by_county.loc[ :, 'Combined_Key' ]
 ```
 
-Remove unneeded columns.
+### Remove unneeded columns prior to merge ###
 
 ```python
 covid_19_time_series_by_county.drop( [ 'UID', 'iso2', 'iso3', 'code3', 'FIPS', 'Admin2', 'Province_State', 'Country_Region' ] , axis = 1, inplace = True )
-```
-
-```python
 covid_19_time_series_by_county.head()
 ```
 
@@ -263,29 +242,25 @@ state_abbr = pd.read_csv('data/state-abbr.csv',
         skipinitialspace=True,
         header=0,
         na_values='?')
-```
 
-```python
 state_abbr.head()
-```
-
-```python
-state_abbr.tail()
 ```
 
 Create a dictionary from the two columns of our state/abbr dataframe.
 
 ```python
 map_abbr_state = dict( zip( state_abbr.Abbr.str.strip(), state_abbr.State.str.strip() ) )
-```
 
-```python
 map_abbr_state.keys()
 ```
+
+Test our dictionary.
 
 ```python
 map_abbr_state[ 'VA' ]
 ```
+
+### Use `apply` to add a `Combined_Key` column to the Trump rallies dataframe ###
 
 ```python
 def create_combined_key_for_trump( row ):
@@ -293,13 +268,7 @@ def create_combined_key_for_trump( row ):
     return combined
 
 trump_rallies[ 'Combined_Key' ] = trump_rallies.apply( create_combined_key_for_trump, axis = 1 )
-```
 
-```python
-trump_rallies[ 'Combined_Key' ].head()
-```
-
-```python
 trump_rallies.head()
 ```
 
@@ -307,17 +276,7 @@ trump_rallies.head()
 
 ```python
 trump_rallies = trump_rallies.merge( covid_19_time_series_by_county, how = "left", on = "Combined_Key")
-```
 
-```python
-trump_rallies.columns
-```
-
-```python
-trump_rallies.shape
-```
-
-```python
 trump_rallies.head()
 ```
 
@@ -565,7 +524,7 @@ trump_rallies.to_csv( 'data/trump-rallies-augmented.csv', index_label = 'Id' )
 # Geospatial plots #
 
 
-Derive a smaller geo-dataframe that we will use for the geospatial plots.
+Derive a smaller geo-dataframe that we will use for the geospatial plot.
 
 ```python
 #
@@ -649,18 +608,7 @@ trump_rallies_time_series.head()
 ```
 
 ```python
-#
-# Create the base plot
-#
-
-
 ax = trump_rallies_time_series.plot.scatter( x = "Date", y = "percent_change", s = 75, color=trump_rallies_time_series[ "mark_color" ], figsize = ( 30, 10 ), grid = True, rot = 90)
-```
-
-```python
-
-
-
 ```
 
 # Acknowledgements #
