@@ -271,7 +271,7 @@ trump_rallies[ 'Combined_Key' ] = trump_rallies.apply( create_combined_key_for_t
 trump_rallies.head()
 ```
 
-### Remove unneeded columns from >COVID-19 dataframe prior to merge ###
+### Remove unneeded columns from COVID-19 dataframe prior to merge ###
 
 ```python
 covid_19_time_series_by_county.drop( [ 'UID', 'iso2', 'iso3', 'code3', 'FIPS', 'Admin2', 'Province_State', 'Country_Region' ] , axis = 1, inplace = True )
@@ -279,6 +279,9 @@ covid_19_time_series_by_county.head()
 ```
 
 ### Perform the merge on the the `Combined_Key` column ###
+
+
+Because this is a _left merge_, it removes any data coming in from the COVID-19 dataframe that is not relevant to the Trump rallies.
 
 ```python
 trump_rallies = trump_rallies.merge( covid_19_time_series_by_county, how = "left", on = "Combined_Key")
@@ -319,11 +322,13 @@ len( covid_19_deaths_by_rally ) - len( covid_19_deaths_by_rally.drop_duplicates(
 ### Repair the index after dropping duplicate rows ###
 
 
-Dropping rows leaves gaps in the index. For example, note that `29` is missing below. Renumber the index.
+Dropping rows leaves gaps in the index. For example, note that `29` is missing below. 
 
 ```python
 covid_19_deaths_by_rally.index
 ```
+
+Renumber the index.
 
 ```python
 covid_19_deaths_by_rally.set_index( pd.Int64Index( range( covid_19_deaths_by_rally.shape[ 0 ] ) ), inplace = True )
@@ -366,27 +371,36 @@ def convert_to_iso( string ):
     my_date = datetime.date( int( '20' + m.group( 3 ) ), int( m.group( 1 ) ), int( m.group( 2 ) ) )
     return( my_date.isoformat() )
 
+#
+# Get the current index
+#
 date_index = covid_19_deaths_by_rally.index
-iso_index = date_index.map( convert_to_iso )
-covid_19_deaths_by_rally.index = iso_index
-```
 
-```python
+#
+# Convert it to ISO 8601
+#
+iso_index = date_index.map( convert_to_iso )
+
+#
+# Replace the index in the dataframe with the converted index
+#
+covid_19_deaths_by_rally.index = iso_index
+
 covid_19_deaths_by_rally.head()
 ```
 
-# Remove the COVID-19 deaths from the Trump rallies table #
+## Remove the COVID-19 deaths from the Trump rallies table ##
 
 ```python
 trump_rallies.drop( trump_rallies.iloc[:, 8:], axis = 1, inplace = True )
+
 trump_rallies.head()
 ```
 
-```python
-trump_rallies[ trump_rallies.Date == "2020-08-17" ]
-```
+## Convert COVID-19 accumulated deaths to death per day ##
 
-The time series data from Johns-Hopkins is cumulative. We want the number of deaths on a particular day, rather than the total number of deaths up until that day. Use the `.diff()` method to the differences between each row in the dataframe.
+
+The time series data from Johns-Hopkins is cumulative. We want the number of deaths on a particular day, rather than the total number of deaths up until that day. Use the `.diff()` method to get the differences between each row in the dataframe.
 
 ```python
 covid_19_deaths_by_rally_no_accumulate = covid_19_deaths_by_rally.diff(periods=1, axis=0)
@@ -401,14 +415,6 @@ covid_19_deaths_by_rally_no_accumulate.tail()
 ```
 
 ```python
-covid_19_deaths_by_rally.loc[ trump_rallies.loc[ 2, 'Date'], trump_rallies.loc[ 2, 'Combined_Key'] ]
-```
-
-```python
-covid_19_deaths_by_rally.loc[ :, trump_rallies.loc[ 2, 'Combined_Key'] ].max()
-```
-
-```python
 my_date = datetime.date(2020, 12,14)
 time_interval = datetime.timedelta( days = constants.TIME_INTERVAL )
 
@@ -418,35 +424,10 @@ before_date_str = ( my_date.fromisoformat( rally_date_str ) - time_interval ).is
 after_date_str = ( my_date.fromisoformat( rally_date_str ) + time_interval ).isoformat()
 ```
 
-Deaths each day for `TIME_INTERVAL` days _prior_ to Trump's rally.
+## Use `apply` to create three new columns: Deaths prior, deaths after, and percentage change ##
 
-```python
-covid_19_deaths_by_rally_no_accumulate.loc[ :, trump_rallies.loc[ 0, 'Combined_Key'] ].loc[ before_date_str:rally_date_str ]
-```
 
-```python
-covid_19_deaths_by_rally_no_accumulate.loc[ :, trump_rallies.loc[ 0, 'Combined_Key'] ].loc[ before_date_str:rally_date_str ].sum()
-```
-
-```python
-covid_19_deaths_by_rally_no_accumulate.loc[ :, trump_rallies.loc[ 1, 'Combined_Key'] ].loc[ before_date_str:rally_date_str ].sum()
-```
-
-```python
-covid_19_deaths_by_rally_no_accumulate.loc[ :, trump_rallies.loc[ 48, 'Combined_Key'] ].loc[ before_date_str:rally_date_str ].sum()
-```
-
-```python
-covid_19_deaths_by_rally_no_accumulate.loc[ :, trump_rallies.loc[ 2, 'Combined_Key'] ].loc[ before_date_str:rally_date_str ].sum()
-```
-
-```python
-covid_19_deaths_by_rally_no_accumulate.loc[ :, trump_rallies.loc[ 3, 'Combined_Key'] ].loc[ before_date_str:rally_date_str ].sum()
-```
-
-```python
-covid_19_deaths_by_rally_no_accumulate.loc[ :, trump_rallies.loc[ 4, 'Combined_Key'] ].loc[ before_date_str:rally_date_str ].sum()
-```
+### Deaths each day for `TIME_INTERVAL` days _prior_ to Trump's rally ###
 
 ```python
 def deaths_prior( row ):
@@ -458,6 +439,8 @@ def deaths_prior( row ):
 trump_rallies[ "deaths_prior" ] = trump_rallies.apply( deaths_prior, axis = 1 )
 ```
 
+### Deaths each day for `TIME_INTERVAL` days _after_ Trump's rally ###
+
 ```python
 def deaths_after( row ):
     time_interval = datetime.timedelta( days = constants.TIME_INTERVAL )
@@ -467,6 +450,8 @@ def deaths_after( row ):
 
 trump_rallies[ "deaths_after" ] = trump_rallies.apply( deaths_after, axis = 1 )
 ```
+
+### Percentage change in deaths from before Trump's rally to after  ###
 
 ```python
 def percent_change( row ):
@@ -479,14 +464,13 @@ def percent_change( row ):
     if ( deaths_prior < deaths_after ):
         change = ( deaths_after - deaths_prior ) / deaths_prior
     else:
-        change = (-1) * ( deaths_prior - deaths_after ) / deaths_prior 
-                
+        change = (-1) * ( deaths_prior - deaths_after ) / deaths_prior                 
     return( round( change * 100, 2 ) )
     
 trump_rallies[ "percent_change" ] = trump_rallies.apply( percent_change, axis = 1 )
 ```
 
-Deaths each day for `TIME_INTERVAL` days _after_ Trump's rally.
+## View the entire table ##
 
 ```python
 trump_rallies.head( 35 )
@@ -495,6 +479,8 @@ trump_rallies.head( 35 )
 ```python
 trump_rallies.tail( 35 )
 ```
+
+## Histogram to see distribution of percentages ##
 
 ```python
 figure_size = [ 18, 5 ]
@@ -524,14 +510,14 @@ plt.axvline(x=mean_change + std_change, color='green', linewidth = 4)
 plt.axvline(x=mean_change - std_change, color='green', linewidth = 4)
 ```
 
-Persist this figure and the augmented dataframe for Trump's rallies.
+**Persist** this figure and the augmented dataframe for Trump's rallies.
 
 ```python
 fig_1.savefig( "viz/hist-counties-by-percent-change.png", bbox_inches = 'tight' )
 trump_rallies.to_csv( 'data/trump-rallies-augmented.csv', index_label = 'Id' )
 ```
 
-# Geospatial plots #
+## Geospatial plots ##
 
 
 Derive a smaller geo-dataframe that we will use for the geospatial plot.
@@ -587,23 +573,27 @@ plt.legend( prop = {'size':15})
 
 ```
 
-Persist the figure and the data.
+**Persist** this figure and the data.
 
 ```python
 fig.savefig( "viz/geo-rallies-and-impact.png", bbox_inches = 'tight' )
 trump_rally_locations.to_csv( 'data/trump-rally-locations.csv', index_label = 'Id' )
 ```
 
-# Time series plot for Trump rallies #
+## Time series plot for Trump rallies ##
+
+
+Derive a new dataframe to use for a time-series plot.
 
 ```python
-#
-# Derive a new dataframe
 #
 # Drop unecessary columns
 #
 trump_rallies_time_series = trump_rallies.drop( [ "Population", "Lat", "Long_", "deaths_prior", "deaths_after" ], axis = 1 )
 
+#
+# Use `apply` to add a new columns for the colors of the marks 
+#
 def rally_colors( row ):
     if row[ "percent_change" ] < 0:
         return( "green" )
