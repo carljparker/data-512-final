@@ -665,6 +665,7 @@ ax = trump_rallies_time_series.plot.scatter( x = "Date", y = "percent_change", s
 
 ```python
 ax.figure.savefig( "viz/trump-rallies-time-series.png", bbox_inches = 'tight')
+trump_rallies_time_series.to_csv( "data/trump-rallies-times-series.csv" )
 ```
 
 # Acknowledgements #
