@@ -84,18 +84,22 @@ And also:
 To be clear, I will look at COVID-19 deaths in the control counties before and after the date of each Trump rally _even though no Trump rally occurred in that county_.
 
 
-# Deaths vs Infections ("Cases") #
+## Deaths vs Infections ("Cases") ##
 
 
 Early feedback questioned measuring deaths vs infections aka "cases".
 
-I chose to measure deaths because a "case" is typically defined simply as a positive test result. Therefore, the term case is a bit misleading in that it _seems_ to imply that someone is sick, but actually it doesn't even imply that someone is contagious or even that they are recently infected. An individual could have been infected by COVID-19 months earlier, been mostly (or perhaps completely) asymptomatic and therefore not even known that they were infected. Much later, the are tested and show up as positive. The irony of such cases is that not only is the individual not a danger to others, they actually make the community safer by virtue of their immunity.
+A _**case**_ is typically defined simply as a positive test result. Therefore, the term _case_ is a bit misleading in that it _seems_ to imply that someone is sick, but actually it doesn't imply that someone is symptomatic or that they are contagious or even that they are recently infected. An individual could have been infected by COVID-19 months earlier, been mostly (or perhaps completely) asymptomatic and therefore not even known that they were infected. Much later, they are tested and show up as positive. The irony of such cases is that not only is the individual not a danger to others, they actually make the community safer by virtue of their immunity.
+
+At the same time, measuring deaths is not without issues either. The main issue is that there might be a significant interval between when an individual is infected by COVID-19 and when they die. For the purposes of this project, in which I am trying to measure the contribution of President Trump's rallies to the spread of the virus, if I measure deaths inside an relatively short interval after the rally then I risk not capturing those deaths that haven't yet occurred. On the other hand, if I extend the interval, I risk the deaths that I capture in the data might actually have been caused by viral spread from other factors.
+
+All that said, I chose to measure deaths rather than cases. In addition to the factors above, I chose deaths because, in the final analysis, it is the outcome that we care most about. If people only became infected with COVID-19, but never died, the current pandemic would probably have much less urgency.
 
 
 ## Unknowns that could affect the results ##
 
 
-I have, so far, identified a couple unknowns that could affect the success of this investigation.
+I have, so far, identified a number of unknowns that could affect the accuracy of the results of this investigation.
 
 - **We don’t know how many people were at each rally.** There could be a lot of variability there, and the number of people at the rally is (almost certainly) an important factor in how many people contract the virus at the rally and therefore how much the virus could spread in the aftermath of the rally.
 - **We don’t know if the people who attended a rally resided in the county where the rally was held.** They might have traveled there and then gone back home afterwards . . . and infected people in their home county. The subsequent deaths would then show up in that county rather than the one in which the rally was held. 
@@ -117,10 +121,16 @@ from shapely.geometry import Point, Polygon
 from matplotlib import pyplot as plt
 ```
 
-Import constants
+# Import constants used in the code #
 
 ```python
 import constants
+```
+
+## Show the constants ##
+
+```python
+!cat constants.py
 ```
 
 ```python
@@ -143,29 +153,11 @@ trump_rallies = pd.read_csv('data/trump-rallies.csv',
 ```
 
 ```python
-trump_rallies.columns
-```
-
-```python
 trump_rallies.head()
 ```
 
 ```python
 trump_rallies.tail()
-```
-
-```python
-trump_rallies.shape
-```
-
-```python
-target_location = trump_rallies.loc[ 0, "City" ] + ", " + trump_rallies.loc[ 0, "State" ]
-target_location
-```
-
-```python
-g = geocoder.bing( target_location, key=os.environ[ 'BING_API_KEY' ] )
-g.json[ 'raw' ][ 'address' ][ 'adminDistrict2' ] 
 ```
 
 ```python
@@ -657,7 +649,7 @@ trump_rallies_time_series.head()
 #
 
 
-ax = trump_rallies_time_series.plot.scatter( x = "Date", "percent_change", s = 15, color=trump_rallies_time_series[ "mark_color" ], figsize = ( 30, 10 ), grid = True, rot = 90)
+ax = trump_rallies_time_series.plot.scatter( x = "Date", y = "percent_change", s = 75, color=trump_rallies_time_series[ "mark_color" ], figsize = ( 30, 10 ), grid = True, rot = 90)
 ```
 
 ```python
