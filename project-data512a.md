@@ -45,43 +45,29 @@ _**The yellow arrows in the two graphs below identify May 26, 2020, that is, the
 ## Research Questions and Hypothesis ##
 
 
-The key question is whether it is possible to identify increases in mortality from COVID-19 subsequent to President Trump's rallies and also relatively proximal to where the rallies were held. And further, to see if these increases are greater than we would expect when compared to changes in COVID-19 mortality during the same times periods in other locations.
+My research question is whether it is possible to identify increases in the spread of COVID-19 subsequent to President Trump's rallies and also relatively proximal to where the rallies were held. 
 
-My hypothesis is that I _can_ identify increases in COVID-19 mortality associated with President Trump's rallies and that these increases are greater than we would expect based on contemporaneous COVID-19 mortality in other areas.
+My hypothesis is that I _can_ identify increases in COVID-19 mortality associated with President Trump's rallies and that these increases are greater than we would expect given the incidence of COVID-19 prior to each rally.
 
 
 ## Data ##
 
 
-For data that indicates the spread of COVID-19, I will use the _COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University_ hosted on GitHub at the following URL:
+For data that indicates the **spread of COVID-19**, I will use the _COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University_ hosted on [GitHub](https://github.com/CSSEGISandData/COVID-19).
 
->  <https://github.com/CSSEGISandData/COVID-19>
+For data on **President Trump's campaign rallies**, I will use the [list maintained on Wikipedia](https://en.wikipedia.org/wiki/List_of_post-election_Donald_Trump_rallies#2020_campaign_rallies).
 
-For data on President Trump's campaign rallies, I will use the list maintained on Wikipedia at the following URL:
-
->  <https://en.wikipedia.org/wiki/List_of_post-election_Donald_Trump_rallies#2020_campaign_rallies>
+For the **county locations** for President Trump's rallies, I used geocoding information from Bing obtained via the [`geocoder` package](https://geocoder.readthedocs.io/providers/Bing.html).
 
 
 ## Methodology ##
 
 
-The Johns-Hopkins data tracks COVID-19 deaths per county in the United States. Using geocoding, I can convert the City-State locations for President Trump's rallies into county locations. I should then be able to gather statistics for each of the counties which are also supported by the Johns-Hopkins data.
+The Johns-Hopkins data tracks COVID-19 deaths _per county_ in the United States. Using geocoding, I convert the City-State locations for President Trump's rallies, from Wikipedia, into county locations. I then collect COVID-19 related death statistics for each of the counties from the Johns-Hopkins data.
 
-I can also gather similar statistics for a set of counties where President Trump did _not_ hold rallies and use these as something analogous to _controls_.
+I compare the number of deaths for a specific time interval _before_ each rally to the number of deaths for that same time interval _after_ the rally. I represent this comparison as a percentage change. I expect this percentage to be uniformly greater than one.
 
-Specifically, the questions that I will investigate are, for each of the Trump rallies:
-
-- What was the change in the seven-day moving average for COVID-19 deaths in the 60 days _**before**_ the date of the Trump rally in that county--and in each of the control counties.
-- What was the change in the seven-day moving average for COVID-19 deaths in the 60 days _**after**_ the date of the Trump rally in that county--and in each of the control counties.
-
-- What was the total accumulated COVID-19 deaths in the 60 days _**before**_ the date of the Trump rally in that county--and in each of the control counties.
-- What was the total accumulated COVID-19 deaths in the 60 days _**after**_ the date of the Trump rally in that county--and in each of the control counties.
-
-And also:
-
-- Compare summary statistics (mean, median, std) for accumulated COVID-19 deaths in the Trump counties vs the control counties.
-
-To be clear, I will look at COVID-19 deaths in the control counties before and after the date of each Trump rally _even though no Trump rally occurred in that county_.
+_The time interval I have chosen is **42 days (six weeks)**._ This is the longest interval that I could use and still include the most-recent rallies that occurred on November 2, 2020.
 
 
 ## Deaths vs Infections ("Cases") ##
@@ -96,7 +82,7 @@ At the same time, measuring deaths is not without issues either. The main issue 
 All that said, I chose to measure deaths rather than cases. In addition to the factors above, I chose deaths because, in the final analysis, it is the outcome that we care most about. If people only became infected with COVID-19, but never died, the current pandemic would probably have much less urgency.
 
 
-## Unknowns that could affect the results ##
+## Limitations: Unknowns that could affect the results ##
 
 
 I have, so far, identified a number of unknowns that could affect the accuracy of the results of this investigation.
@@ -104,6 +90,25 @@ I have, so far, identified a number of unknowns that could affect the accuracy o
 - **We don’t know how many people were at each rally.** There could be a lot of variability there, and the number of people at the rally is (almost certainly) an important factor in how many people contract the virus at the rally and therefore how much the virus could spread in the aftermath of the rally.
 - **We don’t know if the people who attended a rally resided in the county where the rally was held.** They might have traveled there and then gone back home afterwards . . . and infected people in their home county. The subsequent deaths would then show up in that county rather than the one in which the rally was held. 
 - **Trump's rallies are not uniformly distributed across the United States.** This could be for reasons such as campaign strategy. But in any case, regional differences between areas that hosted the rallies and those that didn't could introduce bias into the data. These differences could include local and state policies with respect to behaviors, such as masking, that affect the spread of COVID-19. Also, on a more subtle level, regional differences in culture could also affect viral spread. Some areas, irrespective of official policies, might be more or less likely to spread the vius. For example, the culture in Seattle, WA has a reputation for being somewhat insular. Early in the pandemic, the (relatively) slow community spread in Seattle was attributed to this cultural characteristic.
+
+
+## Prior work: Stanford University Study ##
+
+
+I was able to find only a single investigation into the effects of President Trump's rallies on the spread of COVID-19: [The Effects of Large Group Meetings on the Spread of COVID-19: The Case of Trump Rallies (October, 2020)](https://siepr.stanford.edu/research/publications/effects-large-group-meetings-spread-covid-19-case-trump-rallies) by B. Douglas Bernheim, Nina Buchmann, Zach Freitas-Groff, Sebastián Otero of Stanford University's Institute for Economic Policy Research (SIEPR). 
+
+The study investigated 18 rallies between June 20, 2020 and September 22, 2020. It uses COVID-19 case data from the Johns-Hopkins data respository. It analyzes the data for the county where each rally was held for the ten weeks following the rally. It compares the number of cases during this period with number of cases in a "placebo" county that did not host a Trump rally. The study estimate that the 18 Trump rallies resulted in more than 30,000 incremental cases of COVID-19 and 700 deaths. 
+
+Considerations with the Stanford study and comparison to the current study:
+
+- The Stanford study investigates **18** rallies; the current study investigates **66** rallies.
+- The Stanford study compares the counties where rallies were held _to placebo counties_; the current study compares each county _to itself pre and post the rally date_.
+- Both the Stanford study and the current study use data from the Johns-Hopkins data repository.
+- The Stanford study uses **case data**; the current study uses **mortality data (deaths)**. 
+- The Stanford study tracks COVID-19 cases for the **ten weeks** following each rally; the curent study tracks deaths for the **six weeks** following each rally
+- The Stanford study's estimate of 700 deaths is based on the _death rate_ for the county in question. It is not clear why the Stanford study didn't directly use the mortality data from Johns-Hopkins.
+- Although the Stanford study compares the Trump-rally counties to placebo counties, it doesn't provide the names of the placebo counties. Therefore, reproducibility of the Stanford study is hindered.
+- For the current study, I also considered comparing to a set of _control counties_. However, selecting a set of such counties turned out to be remarkably fraught; so instead, I settled on a much simpler methodology. It is dissapointing that the Stanford researchers do not provide their placebo counties or their criteria for selecting them.
 
 
 # Import required packages #
