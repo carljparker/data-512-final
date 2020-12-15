@@ -2,7 +2,7 @@
 #
 # constants.py
 #
-TIME_INTERVAL = 35
+TIME_INTERVAL = 42
 
 
 # --- END --- #
