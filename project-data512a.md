@@ -208,6 +208,12 @@ covid_19_time_series_by_county.head()
 covid_19_time_series_by_county.tail()
 ```
 
+## Merge Trump rallies data with COVID-19 data ##
+
+
+We need to merge the dataframe that contains the Trump rally information with the dataframe that contains the COVID-19 deaths by county and date.
+
+
 ### The county column ( `Admin2`) contains many duplicates ###
 
 
@@ -217,20 +223,13 @@ The `Admin2` column contains the county. However, we can't use it to merge becau
 len( covid_19_time_series_by_county.loc[ :, 'Admin2' ] ) - len( covid_19_time_series_by_county.loc[ :, 'Admin2' ].unique() )
 ```
 
-The `Combined_Key` column provides a _primary key_ that uniquely identifies the row.
+The `Combined_Key` column provides a _primary key_ that uniquely identifies each row.
 
 ```python
 covid_19_time_series_by_county.loc[ :, 'Combined_Key' ]
 ```
 
-### Remove unneeded columns prior to merge ###
-
-```python
-covid_19_time_series_by_county.drop( [ 'UID', 'iso2', 'iso3', 'code3', 'FIPS', 'Admin2', 'Province_State', 'Country_Region' ] , axis = 1, inplace = True )
-covid_19_time_series_by_county.head()
-```
-
-# Synthesize a key for the Trump rallies dataframe to use for merging #
+### Synthesize a key for the Trump rallies dataframe to use for merging ###
 
 
 Read in a dataset that maps from state names to state abbreviations.
@@ -272,7 +271,14 @@ trump_rallies[ 'Combined_Key' ] = trump_rallies.apply( create_combined_key_for_t
 trump_rallies.head()
 ```
 
-# Merge Trump rallies data with COVID-19 data #
+### Remove unneeded columns from >COVID-19 dataframe prior to merge ###
+
+```python
+covid_19_time_series_by_county.drop( [ 'UID', 'iso2', 'iso3', 'code3', 'FIPS', 'Admin2', 'Province_State', 'Country_Region' ] , axis = 1, inplace = True )
+covid_19_time_series_by_county.head()
+```
+
+### Perform the merge on the the `Combined_Key` column ###
 
 ```python
 trump_rallies = trump_rallies.merge( covid_19_time_series_by_county, how = "left", on = "Combined_Key")
@@ -280,11 +286,7 @@ trump_rallies = trump_rallies.merge( covid_19_time_series_by_county, how = "left
 trump_rallies.head()
 ```
 
-```python
-trump_rallies.tail(10)
-```
-
-# Derive a table that has only the COVID-19 deaths by rally location #
+## Derive a table that has only the COVID-19 deaths by rally location ##
 
 
 Drop columns that are unecessary for this table
@@ -294,22 +296,28 @@ covid_19_deaths_by_rally = trump_rallies.drop( ["Date", "City", "State", "County
 covid_19_deaths_by_rally.head()
 ```
 
-Trump visited the following counties twice, which creates duplicate rows in the dataframe.
+### Remove duplicate rows from dataframe ###
+
+
+Trump visited the following counties more than once, which creates duplicate rows in the dataframe.
 
 - Maricopa, Arizona, US
 - Douglas, Nevada, US
 - Cumberland, North Carolina, US
 
-Drop those duplicate rows.
-
 ```python
 len( covid_19_deaths_by_rally ) - len( covid_19_deaths_by_rally.drop_duplicates() )
 ```
+
+Drop those duplicate rows.
 
 ```python
 covid_19_deaths_by_rally.drop_duplicates( inplace = True )
 len( covid_19_deaths_by_rally ) - len( covid_19_deaths_by_rally.drop_duplicates() )
 ```
+
+### Repair the index after dropping duplicate rows ###
+
 
 Dropping rows leaves gaps in the index. For example, note that `29` is missing below. Renumber the index.
 
@@ -321,6 +329,9 @@ covid_19_deaths_by_rally.index
 covid_19_deaths_by_rally.set_index( pd.Int64Index( range( covid_19_deaths_by_rally.shape[ 0 ] ) ), inplace = True )
 covid_19_deaths_by_rally.index
 ```
+
+## Reconfigure dataframe so that counties are columns and dates are rows ##
+
 
 Swap the rows and columns
 
@@ -343,6 +354,9 @@ Fix up name of first column. View the tail of the dataframe so we can see the nu
 covid_19_deaths_by_rally.columns.name = ""
 covid_19_deaths_by_rally.tail()
 ```
+
+## Use same date format (ISO 8601) for both Trump rallies and COVID-19 times series data ##
+
 
 The Trump rallies dataframe uses dates in ISO 8601 format. Convert the dates in the COVID-19 deaths table to use the same format.
 
@@ -370,10 +384,6 @@ trump_rallies.head()
 
 ```python
 trump_rallies[ trump_rallies.Date == "2020-08-17" ]
-```
-
-```python
-trump_rallies.loc[ 2, 'Combined_Key' ]
 ```
 
 The time series data from Johns-Hopkins is cumulative. We want the number of deaths on a particular day, rather than the total number of deaths up until that day. Use the `.diff()` method to the differences between each row in the dataframe.
