@@ -1,7 +1,7 @@
 Id,Date,City,State,County,Combined_Key,Lat,Long_,Population,deaths_prior,deaths_after,percent_change
 0,2020-06-20,Tulsa,OK,Tulsa County,"Tulsa, Oklahoma, US",36.11939621,-95.94013939,651552.0,29.0,25.0,-13.79
 1,2020-06-23,Phoenix,AZ,Maricopa County,"Maricopa, Arizona, US",33.34835867,-112.4918154,4485414.0,339.0,1248.0,268.14
-2,2020-08-17,Mankato,MN,Blue Earth County,"Blue Earth, Minnesota, US",44.03554215,-94.06699781,67653.0,3.0,0.0,0.0
+2,2020-08-17,Mankato,MN,Blue Earth County,"Blue Earth, Minnesota, US",44.03554215,-94.06699781,67653.0,3.0,0.0,-100.0
 3,2020-08-17,Oshkosh,WI,Winnebago County,"Winnebago, Wisconsin, US",44.06886922,-88.64477096,171907.0,8.0,4.0,-50.0
 4,2020-08-18,Yuma,AZ,Yuma County,"Yuma, Arizona, US",32.76895712,-113.90666740000002,213787.0,140.0,50.0,-64.29
 5,2020-08-20,Old Forge,PA,Lackawanna County,"Lackawanna, Pennsylvania, US",41.43564672,-75.60379201,209674.0,2.0,5.0,150.0
@@ -9,13 +9,13 @@ Id,Date,City,State,County,Combined_Key,Lat,Long_,Population,deaths_prior,deaths_
 7,2020-09-03,Latrobe,PA,Westmoreland County,"Westmoreland, Pennsylvania, US",40.31377979999999,-79.46615476,348899.0,4.0,10.0,150.0
 8,2020-09-08,Winston-Salem,NC,Forsyth County,"Forsyth, North Carolina, US",36.12859861,-80.25459052,382295.0,33.0,23.0,-30.3
 9,2020-09-10,Freeland,MI,Saginaw County,"Saginaw, Michigan, US",43.33433923,-84.05131209999998,190539.0,4.0,15.0,275.0
-10,2020-09-12,Minden,NV,Douglas County,"Douglas, Nevada, US",38.912862,-119.6171333,48905.0,1.0,0.0,0.0
+10,2020-09-12,Minden,NV,Douglas County,"Douglas, Nevada, US",38.912862,-119.6171333,48905.0,1.0,0.0,-100.0
 11,2020-09-13,Henderson,NV,Clark County,"Clark, Nevada, US",36.21458855,-115.0130241,2266715.0,461.0,210.0,-54.45
 12,2020-09-17,Mosinee,WI,Marathon County,"Marathon, Wisconsin, US",44.89792533,-89.75863384,135692.0,3.0,35.0,1066.67
 13,2020-09-18,Bemidji,MN,Beltrami County,"Beltrami, Minnesota, US",47.97373527,-94.93732139,47188.0,4.0,3.0,-25.0
 14,2020-09-19,Fayetteville,NC,Cumberland County,"Cumberland, North Carolina, US",35.04762133,-78.82623165,335509.0,20.0,23.0,15.0
 15,2020-09-21,Vandalia,OH,Montgomery County,"Montgomery, Ohio, US",39.75394919,-84.29050975,531687.0,47.0,38.0,-19.15
-16,2020-09-21,Swanton,OH,Fulton County,"Fulton, Ohio, US",41.60213491,-84.12571393,42126.0,0.0,14.0,0.0
+16,2020-09-21,Swanton,OH,Fulton County,"Fulton, Ohio, US",41.60213491,-84.12571393,42126.0,0.0,14.0,1400.0
 17,2020-09-22,Moon Township,PA,Allegheny County,"Allegheny, Pennsylvania, US",40.46809875,-79.98167747,1216045.0,81.0,61.0,-24.69
 18,2020-09-24,Jacksonville,FL,Duval County,"Duval, Florida, US",30.33225875,-81.66976468,957755.0,135.0,153.0,13.33
 19,2020-09-25,Newport News,VA,Newport News City,"Newport New, Virginia, US",,,,0.0,0.0,0.0
@@ -38,7 +38,7 @@ Id,Date,City,State,County,Combined_Key,Lat,Long_,Population,deaths_prior,deaths_
 36,2020-10-23,The Villages,FL,Sumpter County,"Sumpter, Florida, US",,,,0.0,0.0,0.0
 37,2020-10-23,Pensacola,FL,Escambia County,"Escambia, Florida, US",30.67652764,-87.37284571,318316.0,54.0,32.0,-40.74
 38,2020-10-24,Lumberton,NC,Robeson County,"Robeson, North Carolina, US",34.64244496,-79.10250529999998,130625.0,24.0,19.0,-20.83
-39,2020-10-24,Circleville,OH,Pickaway County,"Pickaway, Ohio, US",39.64170392,-83.0243386,58457.0,2.0,2.0,-0.0
+39,2020-10-24,Circleville,OH,Pickaway County,"Pickaway, Ohio, US",39.64170392,-83.0243386,58457.0,2.0,2.0,0.0
 40,2020-10-24,Waukesha,WI,Waukesha County,"Waukesha, Wisconsin, US",43.01833055,-88.30431188,404198.0,38.0,76.0,100.0
 41,2020-10-25,Manchester,NH,Hillsborough County,"Hillsborough, New Hampshire, US",42.91537785,-71.7200253,417025.0,27.0,18.0,-33.33
 42,2020-10-26,Allentown,PA,Lehigh County,"Lehigh, Pennsylvania, US",40.6154815,-75.59435245,369318.0,16.0,17.0,6.25
