@@ -50,11 +50,11 @@
 # ## Data ##
 
 # %% [markdown]
-# For data that indicates the **spread of COVID-19**, I will use the _COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University_ hosted on [GitHub](https://github.com/CSSEGISandData/COVID-19).
+# For data that indicates the **spread of COVID-19**, I use the _COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University_ hosted on [GitHub](https://github.com/CSSEGISandData/COVID-19).
 #
-# For data on **President Trump's campaign rallies**, I will use the [list maintained on Wikipedia](https://en.wikipedia.org/wiki/List_of_post-election_Donald_Trump_rallies#2020_campaign_rallies).
+# For data on **President Trump's campaign rallies**, I use the [list maintained on Wikipedia](https://en.wikipedia.org/wiki/List_of_post-election_Donald_Trump_rallies#2020_campaign_rallies).
 #
-# For the **county locations** for President Trump's rallies, I used geocoding information from Bing obtained via the [`geocoder` package](https://geocoder.readthedocs.io/providers/Bing.html).
+# For the **county locations** for President Trump's rallies, I use geocoding information from Bing obtained via the [`geocoder` package](https://geocoder.readthedocs.io/providers/Bing.html).
 
 # %% [markdown]
 # ## Methodology ##
@@ -98,7 +98,7 @@
 #
 # Considerations with the Stanford study and comparison to the current study:
 #
-# - The Stanford study investigates **18** rallies; the current study investigates **66** rallies.
+# - The Stanford study investigates **18** rallies; the current study investigates **68** rallies.
 # - The Stanford study compares the counties where rallies were held _to placebo counties_; the current study compares each county _to itself pre and post the rally date_.
 # - Both the Stanford study and the current study use data from the Johns-Hopkins data repository.
 # - The Stanford study uses **case data**; the current study uses **mortality data (deaths)**. 
