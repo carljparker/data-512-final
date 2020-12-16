@@ -111,6 +111,9 @@
 # ## Findings ##
 
 # %% [markdown]
+# (The code that produced the visualizations in this section is available in the **Implementation** section of this notebook.)
+
+# %% [markdown]
 # I found that in **39** counties, the number of deaths following a Trump rally increased, sometimes dramatically. In **25** counties, the number of deaths following a Trump rally decreased. And in **4** counties, the number of deaths stayed the same--that is, there were no deaths before or after the rally.
 
 # %% [markdown]
@@ -663,22 +666,6 @@ ax = trump_rallies_time_series.plot.scatter( x = "Date", y = "percent_change", s
 # %%
 ax.figure.savefig( "viz/trump-rallies-time-series.png", bbox_inches = 'tight')
 trump_rallies_time_series.to_csv( "data/trump-rallies-times-series.csv" )
-
-# %% [markdown]
-# # Acknowledgements #
-#
-# Resources that I learned from while producing this notebook.
-
-# %% [markdown]
-# ## Constants in Python ##
-# Guidance on emulating constants in Python from Jonathan Hsu at [Medium](https://medium.com/better-programming/does-python-have-constants-3b8249dc8b7b)
-
-# %% [markdown]
-# ## GeoPandas ##
-#
-# _GeoPandas 101: Plot any data with a latitude and longitude on a map_ by Ryan Stewart at [TowardsDataScience](https://towardsdatascience.com/geopandas-101-plot-any-data-with-a-latitude-and-longitude-on-a-map-98e01944b972)
-#
-# GeoPandas install [documentation](https://geopandas.org/install.html)
 
 # %% [markdown]
 # ### --- END --- ###
