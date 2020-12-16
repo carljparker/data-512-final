@@ -450,18 +450,15 @@ covid_19_deaths_by_rally.tail()
 # %%
 covid_19_deaths_by_rally_no_accumulate.tail()
 
-# %%
-my_date = datetime.date(2020, 12,14)
-time_interval = datetime.timedelta( days = constants.TIME_INTERVAL )
-
-rally_date_str = trump_rallies.loc[ 1, 'Date']
-
-before_date_str = ( my_date.fromisoformat( rally_date_str ) - time_interval ).isoformat()
-after_date_str = ( my_date.fromisoformat( rally_date_str ) + time_interval ).isoformat()
-
-
 # %% [markdown]
 # ## Use `apply` to create three new columns: Deaths prior, deaths after, and percentage change ##
+
+# %% [markdown]
+# Create a `datetime` object to use for data calculations. The date used in the constructor is arbitary.
+
+# %%
+my_date = datetime.date(2020, 12, 14)
+
 
 # %% [markdown]
 # ### Deaths each day for `TIME_INTERVAL` days _prior_ to Trump's rally ###
@@ -595,6 +592,9 @@ trump_rally_locations_geo = gpd.GeoDataFrame( trump_rally_locations, crs = "EPSG
 
 trump_rally_locations_geo.head()
 
+# %% [markdown]
+# Use the geo-dataframe to construct the geospatial plot.
+
 # %%
 #
 # Create the base plot
@@ -660,8 +660,14 @@ trump_rallies_time_series[ "mark_color" ] = trump_rally_time_series.apply( rally
 
 trump_rallies_time_series.head()
 
+# %% [markdown]
+# Use the time-series dataframe to construct the time series plot.
+
 # %%
 ax = trump_rallies_time_series.plot.scatter( x = "Date", y = "percent_change", s = 75, color=trump_rallies_time_series[ "mark_color" ], figsize = ( 30, 10 ), grid = True, rot = 90 )
+
+# %% [markdown]
+# **Persist** this figure and the dataframe.
 
 # %%
 ax.figure.savefig( "viz/trump-rallies-time-series.png", bbox_inches = 'tight')
