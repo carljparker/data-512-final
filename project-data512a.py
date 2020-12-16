@@ -151,6 +151,30 @@
 # # Implementation #
 
 # %% [markdown]
+# ### Reproducibility Notes ###
+
+# %% [markdown]
+# To install **geopandas**, you will almost certainly need to create a separate anaconda environment. I used the following sequence of commands:
+#
+# ```
+# conda create -n geo_env
+# conda activate geo_env
+# conda config --env --add channels conda-forge
+# conda config --env --set channel_priority strict
+# conda install python=3 geopandas
+# ```
+#
+# To enable jupyter to access the new anaconda environment, I need to use the following commands from inside the environment:
+#
+# ```
+# conda install  jupyter
+# conda install  nb_conda_kernels
+# conda install  ipykernel
+# ```
+#
+# To run the **geocoding code**, you will need a developer key from the Bing Maps service. For more information, see the `code` subdirectory of this repository.
+
+# %% [markdown]
 # ## Import required packages ##
 
 # %%
