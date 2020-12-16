@@ -117,7 +117,7 @@
 # I found that in **39** counties, the number of deaths following a Trump rally increased, sometimes dramatically. In **25** counties, the number of deaths following a Trump rally decreased. And in **4** counties, the number of deaths stayed the same--that is, there were no deaths before or after the rally.
 
 # %% [markdown]
-# The following histogram shows the distributions of the percentages. From the histogram, you can see that the mean percentage increase is 140%. Note however, that while increases can go above 100%, decreases are capped at 100%, so this could account to some extent for the right-skewing of the histogram. Note also that the median at 14.2 is relatively close to zero, which reflects that subsequent to a fair percentage of the rallies COVID-19 deaths either decreased or stayed the same.
+# The following histogram shows the distribution of the percentages. From the histogram, you can see that the mean percentage increase is 140%. Note however, that while increases can go above 100%, decreases are capped at 100%, so this could account to some extent for the right-skewing of the histogram. Note also that the median at 14.2 is relatively close to zero, which reflects that subsequent to 29 of the rallies, COVID-19 deaths either decreased or stayed the same.
 
 # %% [markdown]
 # ![](viz/hist-counties-by-percent-change.png)
@@ -140,11 +140,11 @@
 # %% [markdown]
 # Overall, the findings appear to be inconclusive. 
 #
-# I did find many (39) locations in which COVID-19 deaths increased in the aftermath of Trump campaign rallies--and in some cases, these increases were dramatic.
+# I did find many locations (39) in which COVID-19 deaths increased in the aftermath of Trump campaign rallies--and in some cases, these increases were dramatic.
 #
 # However, there were also many locations (29) in which deaths stayed the same or declined.
 #
-# Also, the increases in the COVID-19 related deaths appear to be clustered which suggests that regional factors contributed to COVID-19 spread rather than (only) the Trump rally. Finally, COVID-19 related deaths following Trump rallies appear to increase with time, that is, they mirror the general progression of the pandemic, which again suggests that the Trump rally is not the (only) contributing factor.
+# Also, the increases in COVID-19 deaths appear to be clustered which suggests that regional factors contributed to COVID-19 spread rather than (only) the Trump rally. Finally, COVID-19 related deaths following Trump rallies appear to increase with time, that is, they mirror the general progression of the pandemic, which again suggests that the Trump rally is not the (only) contributing factor.
 #
 
 # %% [markdown]
@@ -200,8 +200,19 @@ trump_rallies.tail()
 # %% [markdown]
 # ## Use geocoding to obtain county locations for the Trump rallies ##
 
+# %% [markdown]
+# **NB:** To run the geocoding code, you will need a developer key from the Bing Maps service. For more information, see the `code` subdirectory of this repository.
+
+# %% [markdown]
+# Some tests to verify that we are able to retrieve data from the Bing geocoding service.
+#
+# First, retrieve the display the entire JSON block.
+
 # %%
 geocoder.bing( 'Newport News' + ", " + 'VA', key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ]
+
+# %% [markdown]
+# Next, display the subsection of JSON that has the county name, `adminDistrict2`.
 
 # %%
 geocoder.bing( 'Newport News' + ", " + 'VA', key=os.environ[ 'BING_API_KEY' ] ).json[ 'raw' ][ 'address' ]
