@@ -9,9 +9,9 @@
 #       format_version: '1.3'
 #       jupytext_version: 1.7.1
 #   kernelspec:
-#     display_name: Python 3
+#     display_name: Python [conda env:geo_env]
 #     language: python
-#     name: python3
+#     name: conda-env-geo_env-py
 # ---
 
 # %% [markdown]
@@ -553,8 +553,8 @@ trump_rallies.tail( 35 )
 # %%
 trump_rallies[ trump_rallies[ "percent_change" ] > 0 ][ "percent_change" ].count()
 
+
 # %% [markdown]
-#
 # ### Number of counties where COVID-19 deaths decreased ###
 
 # %%

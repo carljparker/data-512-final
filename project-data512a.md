@@ -8,9 +8,9 @@ jupyter:
       format_version: '1.2'
       jupytext_version: 1.7.1
   kernelspec:
-    display_name: Python 3
+    display_name: Python [conda env:geo_env]
     language: python
-    name: python3
+    name: conda-env-geo_env-py
 ---
 
 # Impact of Trump super-spreader rallies on COVID-19 deaths in United States #
