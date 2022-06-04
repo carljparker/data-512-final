@@ -6,7 +6,7 @@
 
 # API Key #
 
-You will need a Bing API key from the following URL:
+You will need to obtain a Bing API key from the following URL:
 
 >  <https://www.bingmapsportal.com/Application>
 
@@ -24,6 +24,12 @@ Run the test app using Python3
 ```
 python3 get-county.py
 ```
+
+# Accessing the API key from a Jupyter notebook #
+
+To make the API key available to a Jupyter notebook, you need to launch
+the notebook from a console from which you have exported the API key
+into the environment.
 
 
 ### --- END --- ###
