@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ---
 # jupyter:
 #   jupytext:
@@ -7,7 +6,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.7.1
+#       jupytext_version: 1.13.8
 #   kernelspec:
 #     display_name: Python [conda env:geo_env]
 #     language: python
@@ -31,7 +30,7 @@
 # This "hypothesis" is confounded, however, by summer political campaigning in the run up to the 2020 Elections. In particular, President Trump was notable for holding campaign rallies in which the president did not follow normative behavior to control COVID-19 infections and neither did many of the rally attendees--possibly following the president's lead. These became known as _super-spreader rallies_. 
 
 # %% [markdown]
-# _**The yellow arrows in the two graphs below identify May 26, 2020, that is, the day after George Floyd died while in police custody.**_
+# _**The yellow arrow in the graph below identifies May 26, 2020, that is, the day after George Floyd died while in police custody.**_
 
 # %% [markdown]
 # ### COVID-19 deaths: Seven day moving average ###
@@ -114,10 +113,10 @@
 # (The code that produced the visualizations in this section is available in the **Implementation** section of this notebook.)
 
 # %% [markdown]
-# I found that in **39** counties, the number of deaths following a Trump rally increased, sometimes dramatically. In **25** counties, the number of deaths following a Trump rally decreased. And in **4** counties, the number of deaths stayed the same--that is, there were no deaths before or after the rally.
+# I found that in **35** counties, the number of deaths following a Trump rally increased, sometimes dramatically. In **26** counties, the number of deaths following a Trump rally decreased. And in **7** counties, the number of deaths stayed the same--that is, there were no deaths before or after the rally.
 
 # %% [markdown]
-# The following histogram shows the distribution of the percentages. From the histogram, you can see that the mean percentage increase is 140%. Note however, that while increases can go above 100%, decreases are capped at 100%, so this could account to some extent for the right-skewing of the histogram. Note also that the median at 14.2 is relatively close to zero, which reflects that subsequent to 29 of the rallies, COVID-19 deaths either decreased or stayed the same.
+# The following histogram shows the distribution of the percentages. From the histogram, you can see that the mean percentage increase is 144%. Note however, that while increases can go above 100%, decreases are capped at 100%, so this could account to some extent for the right-skewing of the histogram. Note also that the median at 5.96 is relatively close to zero which reflects that the distribution is influenced by outliers in the data.
 
 # %% [markdown]
 # ![](viz/hist-counties-by-percent-change.png)
@@ -140,9 +139,9 @@
 # %% [markdown]
 # Overall, the findings appear to be inconclusive. 
 #
-# I did find many locations (39) in which COVID-19 deaths increased in the aftermath of Trump campaign rallies--and in some cases, these increases were dramatic.
+# I did find many locations (35) in which COVID-19 deaths increased in the aftermath of Trump campaign rallies--and in some cases, these increases were dramatic.
 #
-# However, there were also many locations (29) in which deaths stayed the same or declined.
+# However, there were also many locations (33) in which deaths stayed the same or declined.
 #
 # Also, the increases in COVID-19 deaths appear to be clustered which suggests that regional factors contributed to COVID-19 spread rather than (only) the Trump rally. Finally, COVID-19 related deaths following Trump rallies appear to increase with time, that is, they mirror the general progression of the pandemic, which again suggests that the Trump rally is not the (only) contributing factor.
 #
@@ -154,7 +153,7 @@
 # ### Reproducibility Notes ###
 
 # %% [markdown]
-# To install **geopandas**, you will almost certainly need to create a separate anaconda environment. I used the following sequence of commands:
+# To install **geopandas**, you will almost certainly need to create a separate anaconda environment because of geopandas complex dependencies. I used the following sequence of commands:
 #
 # ```
 # conda create -n geo_env
@@ -164,7 +163,7 @@
 # conda install python=3 geopandas
 # ```
 #
-# To enable jupyter to access the new anaconda environment, I need to use the following commands from inside the environment:
+# To enable jupyter to access the new anaconda environment, use the following commands from inside the environment:
 #
 # ```
 # conda install  jupyter
@@ -245,6 +244,9 @@ geocoder.bing( 'Newport News' + ", " + 'VA', key=os.environ[ 'BING_API_KEY' ] ).
 # %% [markdown]
 # ### Use `apply` to create an additional column with the county information ###
 
+# %% [markdown]
+# The `axis = 1` parameter to `apply()` specifies that the function should be applied to each _row_.
+
 # %%
 def gcode( row ):
     g = geocoder.bing( row[ 'City' ] + ", " + row[ 'State' ], key=os.environ[ 'BING_API_KEY' ] )
@@ -289,7 +291,7 @@ covid_19_time_series_by_county.tail()
 # ### The county column ( `Admin2`) contains many duplicates ###
 
 # %% [markdown]
-# The `Admin2` column contains the county. However, we can't use it to merge because it contain many duplicates.
+# The `Admin2` column contains the county. However, we can't use it to merge because it contain many duplicates; multiple states have counties with the same name.
 
 # %%
 len( covid_19_time_series_by_county.loc[ :, 'Admin2' ] ) - len( covid_19_time_series_by_county.loc[ :, 'Admin2' ].unique() )
@@ -354,7 +356,7 @@ covid_19_time_series_by_county.head()
 # ### Perform the merge on the the `Combined_Key` column ###
 
 # %% [markdown]
-# Because this is a _left merge_, it removes any data coming in from the COVID-19 dataframe that is not relevant to the Trump rallies.
+# Because this is a _left merge_, it removes any data row coming in from the COVID-19 dataframe that are not relevant to the Trump rallies, i.e. which do not have values that appear in `Combined_Key`.
 
 # %%
 trump_rallies = trump_rallies.merge( covid_19_time_series_by_county, how = "left", on = "Combined_Key")
@@ -408,7 +410,7 @@ covid_19_deaths_by_rally.set_index( pd.Int64Index( range( covid_19_deaths_by_ral
 covid_19_deaths_by_rally.index
 
 # %% [markdown]
-# ## Reconfigure dataframe so that counties are columns and dates are rows ##
+# ## Transpose dataframe so that counties are columns and dates are rows ##
 
 # %% [markdown]
 # Swap the rows and columns
@@ -653,7 +655,7 @@ ax.set_ylim(22, 51)
 #
 trump_rally_locations_geo[ trump_rally_locations_geo[ "percent_change" ] > 0 ].plot( ax = ax, color = "red", label = "Increase" )
 trump_rally_locations_geo[ trump_rally_locations_geo[ "percent_change" ] < 0 ].plot( ax = ax, color = "green", label = "Decrease" )
-trump_rally_locations_geo[ trump_rally_locations_geo[ "percent_change" ] == 0 ].plot( ax = ax, color = "yellow", label = "No change" )
+trump_rally_locations_geo[ trump_rally_locations_geo[ "percent_change" ] == 0 ].plot( ax = ax, color = "blue", label = "No change" )
 
 #
 # Add the legend
@@ -689,9 +691,9 @@ def rally_colors( row ):
     elif row[ "percent_change" ] > 0:
         return( "red" )
     elif row[ "percent_change" ] == 0:
-        return( "black" )
+        return( "blue" )
     
-trump_rallies_time_series[ "mark_color" ] = trump_rally_time_series.apply( rally_colors, axis = 1 )
+trump_rallies_time_series[ "mark_color" ] = trump_rallies_time_series.apply( rally_colors, axis = 1 )
 
 trump_rallies_time_series.head()
 

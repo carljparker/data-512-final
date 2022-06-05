@@ -1,69 +1,69 @@
 ,Date,City,State,County,Combined_Key,percent_change,mark_color
-0,2020-06-20,Tulsa,OK,Tulsa County,"Tulsa, Oklahoma, US",-13.79,green
-1,2020-06-23,Phoenix,AZ,Maricopa County,"Maricopa, Arizona, US",268.14,red
-2,2020-08-17,Mankato,MN,Blue Earth County,"Blue Earth, Minnesota, US",-100.0,black
-3,2020-08-17,Oshkosh,WI,Winnebago County,"Winnebago, Wisconsin, US",-50.0,green
-4,2020-08-18,Yuma,AZ,Yuma County,"Yuma, Arizona, US",-64.29,green
-5,2020-08-20,Old Forge,PA,Lackawanna County,"Lackawanna, Pennsylvania, US",150.0,red
-6,2020-08-28,Londonderry,NH,Rockingham County,"Rockingham, New Hampshire, US",-42.86,green
-7,2020-09-03,Latrobe,PA,Westmoreland County,"Westmoreland, Pennsylvania, US",150.0,red
-8,2020-09-08,Winston-Salem,NC,Forsyth County,"Forsyth, North Carolina, US",-30.3,green
-9,2020-09-10,Freeland,MI,Saginaw County,"Saginaw, Michigan, US",275.0,red
-10,2020-09-12,Minden,NV,Douglas County,"Douglas, Nevada, US",-100.0,black
-11,2020-09-13,Henderson,NV,Clark County,"Clark, Nevada, US",-54.45,green
-12,2020-09-17,Mosinee,WI,Marathon County,"Marathon, Wisconsin, US",1066.67,red
-13,2020-09-18,Bemidji,MN,Beltrami County,"Beltrami, Minnesota, US",-25.0,green
-14,2020-09-19,Fayetteville,NC,Cumberland County,"Cumberland, North Carolina, US",15.0,red
-15,2020-09-21,Vandalia,OH,Montgomery County,"Montgomery, Ohio, US",-19.15,green
-16,2020-09-21,Swanton,OH,Fulton County,"Fulton, Ohio, US",1400.0,black
-17,2020-09-22,Moon Township,PA,Allegheny County,"Allegheny, Pennsylvania, US",-24.69,green
-18,2020-09-24,Jacksonville,FL,Duval County,"Duval, Florida, US",13.33,red
-19,2020-09-25,Newport News,VA,Newport News City,"Newport New, Virginia, US",0.0,black
-20,2020-09-26,Middletown,PA,Dauphin County,"Dauphin, Pennsylvania, US",-20.0,green
-21,2020-09-30,Duluth,MN,St. Louis County,"St. Louis, Minnesota, US",78.95,red
-22,2020-10-12,Sanford,FL,Seminole County,"Seminole, Florida, US",-54.0,green
-23,2020-10-13,Johnstown,PA,Cambria County,"Cambria, Pennsylvania, US",1500.0,red
-24,2020-10-14,Des Moines,IA,Polk County,"Polk, Iowa, US",18.75,red
-25,2020-10-15,Greenville,NC,Pitt County,"Pitt, North Carolina, US",-18.18,green
-26,2020-10-16,Ocala,FL,Marion County,"Marion, Florida, US",-59.0,green
-27,2020-10-16,Macon,GA,Bibb County,"Bibb, Georgia, US",7.5,red
-28,2020-10-17,Muskegon,MI,Muskegon County,"Muskegon, Michigan, US",787.5,red
-29,2020-10-17,Muskegon,MI,Muskegon County,"Muskegon, Michigan, US",787.5,red
-30,2020-10-17,Janesville,WI,Rock County,"Rock, Wisconsin, US",123.08,red
-31,2020-10-18,Carson City,NV,Carson City City,"Carson Cit, Nevada, US",0.0,black
-32,2020-10-19,Prescott,AZ,Yavapai County,"Yavapai, Arizona, US",185.71,red
-33,2020-10-19,Tucson,AZ,Pima County,"Pima, Arizona, US",25.0,red
-34,2020-10-20,Erie,PA,Erie County,"Erie, Pennsylvania, US",600.0,red
-35,2020-10-21,Gastonia,NC,Gaston County,"Gaston, North Carolina, US",127.27,red
-36,2020-10-23,The Villages,FL,Sumpter County,"Sumpter, Florida, US",0.0,black
-37,2020-10-23,Pensacola,FL,Escambia County,"Escambia, Florida, US",-40.74,green
-38,2020-10-24,Lumberton,NC,Robeson County,"Robeson, North Carolina, US",-20.83,green
-39,2020-10-24,Circleville,OH,Pickaway County,"Pickaway, Ohio, US",0.0,black
-40,2020-10-24,Waukesha,WI,Waukesha County,"Waukesha, Wisconsin, US",100.0,red
+0,2020-06-20,Tulsa,OK,Tulsa County,"Tulsa, Oklahoma, US",20.0,red
+1,2020-06-23,Phoenix,AZ,Maricopa County,"Maricopa, Arizona, US",267.8,red
+2,2020-08-17,Mankato,MN,Blue Earth County,"Blue Earth, Minnesota, US",-100.0,green
+3,2020-08-17,Oshkosh,WI,Winnebago County,"Winnebago, Wisconsin, US",50.0,red
+4,2020-08-18,Yuma,AZ,Yuma County,"Yuma, Arizona, US",-71.19,green
+5,2020-08-20,Old Forge,PA,Lackawanna County,"Lackawanna, Pennsylvania, US",0.0,blue
+6,2020-08-28,Londonderry,NH,Rockingham County,"Rockingham, New Hampshire, US",-50.0,green
+7,2020-09-03,Latrobe,PA,Westmoreland County,"Westmoreland, Pennsylvania, US",100.0,red
+8,2020-09-08,Winston-Salem,NC,Forsyth County,"Forsyth, North Carolina, US",-21.95,green
+9,2020-09-10,Freeland,MI,Saginaw County,"Saginaw, Michigan, US",171.43,red
+10,2020-09-12,Minden,NV,Douglas County,"Douglas, Nevada, US",-100.0,green
+11,2020-09-13,Henderson,NV,Clark County,"Clark, Nevada, US",-59.27,green
+12,2020-09-17,Mosinee,WI,Marathon County,"Marathon, Wisconsin, US",1125.0,red
+13,2020-09-18,Bemidji,MN,Beltrami County,"Beltrami, Minnesota, US",25.0,red
+14,2020-09-19,Fayetteville,NC,Cumberland County,"Cumberland, North Carolina, US",4.17,red
+15,2020-09-21,Vandalia,OH,Montgomery County,"Montgomery, Ohio, US",-34.48,green
+16,2020-09-21,Swanton,OH,Fulton County,"Fulton, Ohio, US",1600.0,red
+17,2020-09-22,Moon Township,PA,Allegheny County,"Allegheny, Pennsylvania, US",-28.85,green
+18,2020-09-24,Jacksonville,FL,Duval County,"Duval, Florida, US",8.28,red
+19,2020-09-25,Newport News,VA,Newport News City,"Newport New, Virginia, US",0.0,blue
+20,2020-09-26,Middletown,PA,Dauphin County,"Dauphin, Pennsylvania, US",-19.05,green
+21,2020-09-30,Duluth,MN,St. Louis County,"St. Louis, Minnesota, US",66.67,red
+22,2020-10-12,Sanford,FL,Seminole County,"Seminole, Florida, US",-41.67,green
+23,2020-10-13,Johnstown,PA,Cambria County,"Cambria, Pennsylvania, US",1166.67,red
+24,2020-10-14,Des Moines,IA,Polk County,"Polk, Iowa, US",-3.85,green
+25,2020-10-15,Greenville,NC,Pitt County,"Pitt, North Carolina, US",-43.75,green
+26,2020-10-16,Ocala,FL,Marion County,"Marion, Florida, US",-66.67,green
+27,2020-10-16,Macon,GA,Bibb County,"Bibb, Georgia, US",-16.36,green
+28,2020-10-17,Muskegon,MI,Muskegon County,"Muskegon, Michigan, US",1100.0,red
+29,2020-10-17,Muskegon,MI,Muskegon County,"Muskegon, Michigan, US",1100.0,red
+30,2020-10-17,Janesville,WI,Rock County,"Rock, Wisconsin, US",180.0,red
+31,2020-10-18,Carson City,NV,Carson City City,"Carson Cit, Nevada, US",0.0,blue
+32,2020-10-19,Prescott,AZ,Yavapai County,"Yavapai, Arizona, US",300.0,red
+33,2020-10-19,Tucson,AZ,Pima County,"Pima, Arizona, US",47.37,red
+34,2020-10-20,Erie,PA,Erie County,"Erie, Pennsylvania, US",500.0,red
+35,2020-10-21,Gastonia,NC,Gaston County,"Gaston, North Carolina, US",92.5,red
+36,2020-10-23,The Villages,FL,Sumpter County,"Sumpter, Florida, US",0.0,blue
+37,2020-10-23,Pensacola,FL,Escambia County,"Escambia, Florida, US",-49.28,green
+38,2020-10-24,Lumberton,NC,Robeson County,"Robeson, North Carolina, US",-34.48,green
+39,2020-10-24,Circleville,OH,Pickaway County,"Pickaway, Ohio, US",0.0,blue
+40,2020-10-24,Waukesha,WI,Waukesha County,"Waukesha, Wisconsin, US",85.37,red
 41,2020-10-25,Manchester,NH,Hillsborough County,"Hillsborough, New Hampshire, US",-33.33,green
-42,2020-10-26,Allentown,PA,Lehigh County,"Lehigh, Pennsylvania, US",6.25,red
-43,2020-10-26,Lititz,PA,Lancaster County,"Lancaster, Pennsylvania, US",126.32,red
-44,2020-10-26,Martinsburg,PA,Blair County,"Blair, Pennsylvania, US",191.67,red
-45,2020-10-27,Lansing,MI,Ingham County,"Ingham, Michigan, US",133.33,red
+42,2020-10-26,Allentown,PA,Lehigh County,"Lehigh, Pennsylvania, US",-15.0,green
+43,2020-10-26,Lititz,PA,Lancaster County,"Lancaster, Pennsylvania, US",48.28,red
+44,2020-10-26,Martinsburg,PA,Blair County,"Blair, Pennsylvania, US",150.0,red
+45,2020-10-27,Lansing,MI,Ingham County,"Ingham, Michigan, US",90.91,red
 46,2020-10-27,West Salem,WI,La Crosse County,"La Crosse, Wisconsin, US",-35.0,green
-47,2020-10-27,Omaha,NE,Douglas County,"Douglas, Nebraska, US",116.67,red
-48,2020-10-28,Bullhead City,AZ,Mohave County,"Mohave, Arizona, US",328.57,red
-49,2020-10-28,Goodyear,AZ,Maricopa County,"Maricopa, Arizona, US",46.83,red
-50,2020-10-29,Tampa,FL,Hillsborough County,"Hillsborough, Florida, US",-23.37,green
-51,2020-10-30,Waterford Township,MI,Oakland County,"Oakland, Michigan, US",176.74,red
-52,2020-10-30,Green Bay,WI,Brown County,"Brown, Wisconsin, US",-58.93,green
-53,2020-10-30,Rochester,MN,Olmsted County,"Olmsted, Minnesota, US",100.0,red
-54,2020-10-31,Newtown,PA,Bucks County,"Bucks, Pennsylvania, US",152.63,red
-55,2020-10-31,Reading,PA,Berks County,"Berks, Pennsylvania, US",6.25,red
-56,2020-10-31,Butler,PA,Butler County,"Butler, Pennsylvania, US",760.0,red
-57,2020-10-31,Montoursville,PA,Lycoming County,"Lycoming, Pennsylvania, US",-14.29,green
-58,2020-11-01,Washington,MI,Macomb County,"Macomb, Michigan, US",119.48,red
-59,2020-11-01,Dubuque,IA,Dubuque County,"Dubuque, Iowa, US",60.0,red
-60,2020-11-01,Hickory,NC,Catawba County,"Catawba, North Carolina, US",130.0,red
-61,2020-11-01,Rome,GA,Floyd County,"Floyd, Georgia, US",31.25,red
-62,2020-11-01,Opa-locka,FL,Miami-Dade County,"Miami-Dade, Florida, US",-59.16,green
-63,2020-11-02,Fayetteville,NC,Cumberland County,"Cumberland, North Carolina, US",-37.5,green
-64,2020-11-02,Scranton,PA,Lackawanna County,"Lackawanna, Pennsylvania, US",500.0,red
-65,2020-11-02,Traverse City,MI,Grand Traverse County,"Grand Traverse, Michigan, US",-16.67,green
-66,2020-11-02,Kenosha,WI,Kenosha County,"Kenosha, Wisconsin, US",60.0,red
-67,2020-11-02,Grand Rapids,MI,Kent County,"Kent, Michigan, US",1014.29,red
+47,2020-10-27,Omaha,NE,Douglas County,"Douglas, Nebraska, US",73.33,red
+48,2020-10-28,Bullhead City,AZ,Mohave County,"Mohave, Arizona, US",150.0,red
+49,2020-10-28,Goodyear,AZ,Maricopa County,"Maricopa, Arizona, US",7.75,red
+50,2020-10-29,Tampa,FL,Hillsborough County,"Hillsborough, Florida, US",-30.2,green
+51,2020-10-30,Waterford Township,MI,Oakland County,"Oakland, Michigan, US",153.19,red
+52,2020-10-30,Green Bay,WI,Brown County,"Brown, Wisconsin, US",-59.65,green
+53,2020-10-30,Rochester,MN,Olmsted County,"Olmsted, Minnesota, US",0.0,blue
+54,2020-10-31,Newtown,PA,Schuylkill County,"Schuylkill, Pennsylvania, US",66.67,red
+55,2020-10-31,Reading,PA,Berks County,"Berks, Pennsylvania, US",-10.53,green
+56,2020-10-31,Butler,PA,Butler County,"Butler, Pennsylvania, US",616.67,red
+57,2020-10-31,Montoursville,PA,Lycoming County,"Lycoming, Pennsylvania, US",-33.33,green
+58,2020-11-01,Washington,MI,Macomb County,"Macomb, Michigan, US",89.89,red
+59,2020-11-01,Dubuque,IA,Dubuque County,"Dubuque, Iowa, US",52.38,red
+60,2020-11-01,Hickory,NC,Catawba County,"Catawba, North Carolina, US",109.09,red
+61,2020-11-01,Rome,GA,Floyd County,"Floyd, Georgia, US",0.0,blue
+62,2020-11-01,Opa-locka,FL,Miami-Dade County,"Miami-Dade, Florida, US",-71.0,green
+63,2020-11-02,Fayetteville,NC,Cumberland County,"Cumberland, North Carolina, US",-40.0,green
+64,2020-11-02,Scranton,PA,Lackawanna County,"Lackawanna, Pennsylvania, US",300.0,red
+65,2020-11-02,Traverse City,MI,Grand Traverse County,"Grand Traverse, Michigan, US",-28.57,green
+66,2020-11-02,Kenosha,WI,Kenosha County,"Kenosha, Wisconsin, US",54.84,red
+67,2020-11-02,Grand Rapids,MI,Kent County,"Kent, Michigan, US",940.0,red
