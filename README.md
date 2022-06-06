@@ -10,8 +10,8 @@ after each of 68 Trump campaign rallies that spanned a time period from
 June 20, 2020 to November 2, 2020. The counts were collected at the
 county level for the counties in which the rallies were held. For each
 rally, a percentage change in COVID-19 deaths was calculated. Of the 68
-rallies, 39 showed an increase in COVID-19 deaths and 29 showed either a
-decrease (25) or no change (4). In addition, increases or decreases in
+rallies, 35 showed an increase in COVID-19 deaths and 33 showed either a
+decrease (26) or no change (7). In addition, increases or decreases in
 deaths appeared to be geographically clustered; and increases in deaths
 appeared to reflect the progression of the pandemic more generally.
 Based on these findings--especially the findings that COVID-19 deaths
