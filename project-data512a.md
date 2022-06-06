@@ -112,7 +112,7 @@ Considerations with the Stanford study and comparison to the current study:
 (The code that produced the visualizations in this section is available in the **Implementation** section of this notebook.)
 
 
-I found that in **35** counties, the number of deaths following a Trump rally increased, sometimes dramatically. In **26** counties, the number of deaths following a Trump rally decreased. And in **7** counties, the number of deaths stayed the same--that is, there were no deaths before or after the rally.
+I found that in **35** counties (51.5%), the number of deaths following a Trump rally increased, sometimes dramatically. In **26** counties (38.2%), the number of deaths following a Trump rally decreased. And in **7** counties (10.3%), the number of deaths stayed the same--that is, there were no deaths before or after the rally.
 
 
 The following histogram shows the distribution of the percentages. From the histogram, you can see that the mean percentage increase is 144%. Note however, that while increases can go above 100%, decreases are capped at 100%, so this could account to some extent for the right-skewing of the histogram. Note also that the median at 5.96 is relatively close to zero which reflects that the distribution is influenced by outliers in the data.
